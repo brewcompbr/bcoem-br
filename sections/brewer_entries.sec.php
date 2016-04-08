@@ -71,9 +71,9 @@ $firefox_warning = "";
 
 
 // Build Headers
-$header1_1 .= "<a name='list'></a><h2>Entries</h2>";
+$header1_1 .= "<a name='list'></a><h2>Amostras</h2>";
  
-$firefox_warning .= "<div class='error'>There is a known issue with printing from the Firefox browser. To print all pages properly from Firefox, RIGHT CLICK on any print link and choose \"Open Link in New Tab.\" Then, use Firefox's native printing function (Edit > Print) to print your documents. Be aware that you should use the browser's File > Page Setup... function to specify portrait or landscape, margins, etc.</div>";
+$firefox_warning .= "<div class='error'>Para imprimir essas páginas, por favor utilize o Internet Explorer ou Google Chrome. Obrigado.</div>";
 
 // Show Scores?
 if ((judging_date_return() == 0) && ($entry_window_open == 2) && ($registration_open == 2) && ($judge_window_open == 2) && ($_SESSION['prefsDisplayWinners'] == "Y") && (judging_winner_display($delay))) $show_scores = TRUE; else $show_scores = FALSE;
@@ -90,7 +90,7 @@ if (($totalRows_log > 0) && ($action != "print")) {
 	
 	if (entries_unconfirmed($_SESSION['user_id']) > 0) { 
 			$warnings .= "<div class='error'>";
-			$warnings .= "You have unconfirmed entries. For each highlighed entry below with a <span class='icon'><img src='".$base_url."images/exclamation.png'></span> icon, click \"Edit\" to review and confirm all your entry data. Unconfirmed entries will be deleted automatically after 24 hours."; 
+			$warnings .= "Você tem amostras sem confirmação. Para cada amostra abaixo com um <span class='icon'><img src='".$base_url."images/exclamation.png'></span> , clique em  \"Editar\" para revisar e confirmar as amostras. Asmostras sem confoirmação serão automaticamente removidas em 24 horas."; 
 			if ($_SESSION['prefsPayToPrint'] == "Y") $warnings .= " You CANNOT pay for your entries until all entries are confirmed."; 
 			$warnings .= "</div>"; 
 		}
@@ -104,9 +104,9 @@ if (($registration_open >= 1) && ($entry_window_open >=1)) {
 	$entry_message .= "<div class='adminSubNavContainer'>";
 	$entry_message .= "<span class='adminSubNav'>";
 	$entry_message .= "<span class='icon'><img src='".$base_url."images/information.png'  border='0' alt='Entry Limit' title='Entry Limit' /></span>";
-	$entry_message .= $_SESSION['brewerFirstName'].", you have ".readable_number($totalRows_log);
-	if ($totalRows_log == 1) $entry_message .= " entry"; else $entry_message .= " entries"; 
-	$entry_message .= ", listed below.";
+	$entry_message .= $_SESSION['brewerFirstName'].", você tem ".readable_number($totalRows_log);
+	if ($totalRows_log == 1) $entry_message .= " amostra"; else $entry_message .= " amostras"; 
+	$entry_message .= ", na lista abaixo.";
 	$entry_message .= "</span>";
 	$entry_message .= "</div>";
 	
@@ -117,20 +117,20 @@ if (($registration_open >= 1) && ($entry_window_open >=1)) {
 		$remaining_message .= "<span class='icon'><img src='".$base_url."images/information.png'  border='0' alt='Entry Limit' title='Entry Limit' /></span>";
 		
 		if ($remaining_entries > 0) {
-			$remaining_message .= "You have <strong>".readable_number($remaining_entries)." (".$remaining_entries.")</strong>";
-			if ($remaining_entries == 1) $remaining_message .= " entry ";
-			else $remaining_message .= " entries "; 
-			$remaining_message .= "left before you reach the limit of ".readable_number($row_limits['prefsUserEntryLimit'])." (".$row_limits['prefsUserEntryLimit'].") ";
-			if ($row_limits['prefsUserEntryLimit'] > 1) $remaining_message .= " entries ";
-			else $remaining_message .= " entry "; 
-			$remaining_message .= "per participant in this competition.";
+			$remaining_message .= "Você tem <strong>".readable_number($remaining_entries)." (".$remaining_entries.")</strong>";
+			if ($remaining_entries == 1) $remaining_message .= " amostra disponível";
+			else $remaining_message .= " amostras disponíveis"; 
+			$remaining_message .= "  antes de atingir o limite de ".readable_number($row_limits['prefsUserEntryLimit'])." (".$row_limits['prefsUserEntryLimit'].") ";
+			if ($row_limits['prefsUserEntryLimit'] > 1) $remaining_message .= " amostras ";
+			else $remaining_message .= " amostra "; 
+			$remaining_message .= "por participante nessa competição.";
 		}
 		else {
 			$remaining_message .= "<strong>";
-			$remaining_message .= "You have reached the limit of ".readable_number($row_limits['prefsUserEntryLimit'])." (".$row_limits['prefsUserEntryLimit'].") ";
-			if ($row_limits['prefsUserEntryLimit'] > 1) $remaining_message .= "entries ";
-			else $remaining_message .= "entry ";
-			$remaining_message .= "per participant in this competition.";
+			$remaining_message .= "Você atingiu o limite de ".readable_number($row_limits['prefsUserEntryLimit'])." (".$row_limits['prefsUserEntryLimit'].") ";
+			if ($row_limits['prefsUserEntryLimit'] > 1) $remaining_message .= "amostras ";
+			else $remaining_message .= "amostra ";
+			$remaining_message .= "por participante nessa competição.";
 			$remaining_message .= "</strong>";
 		}
 		
@@ -144,30 +144,31 @@ if (($registration_open >= 1) && ($entry_window_open >=1)) {
 	$add_entry_link .= "<a href='";
 	if ($_SESSION['userLevel'] <= "1") $add_entry_link .= "index.php?section=brew&amp;go=entries&amp;action=add&amp;filter=admin"; 
 	else $add_entry_link .= "index.php?section=brew&amp;action=add'";
-	$add_entry_link .= "'>Add an Entry</a>";
+	$add_entry_link .= "'>Adicionar uma Amostra</a>";
 	$add_entry_link .= "</span>";
 	
 	// Build Beer XML Link
-	$beer_xml_link .= "<span class='adminSubNav'>";
-	$beer_xml_link .= "<span class='icon'><img src='".$base_url."images/page_code.png' border='0' alt='Add Entry Using BeerXML' title='Add Entry Using BeerXML' /></span>";
-	$beer_xml_link .= "<a href='".build_public_url("beerxml","default","default",$sef,$base_url)."'>Import Entries Using BeerXML</a>";
-	$beer_xml_link .= "</span>";
+	//$beer_xml_link .= "<span class='adminSubNav'>";
+	//$beer_xml_link .= "<span class='icon'><img src='".$base_url."images/page_code.png' border='0' alt='Add Entry Using BeerXML' title='Add Entry Using BeerXML' /></span>";
+	//$beer_xml_link .= "<a href='".build_public_url("beerxml","default","default",$sef,$base_url)."'>Import Entries Using BeerXML</a>";
+	//$beer_xml_link .= "</span>";
 
 	// Build Print List of Entries Link
 	$print_list_link .= "<span class='adminSubNav'>";
-	$print_list_link .= "<span class='icon'><img src='".$base_url."images/printer.png' border='0' alt='Print Entry List' title='Print Entry List' /></span>";
-	$print_list_link .= "<a id='modal_window_link' href='".$base_url."output/print.php?section=list&amp;action=print' title='Print Your List of Entries and Info'>Print Your List of Entries and Info</a>"; 
+	$print_list_link .= "<span class='icon'><img src='".$base_url."images/printer.png' border='0' alt='Imprimir Lista de Amostras' title='Imprimir Lista de Amostras' /></span>";
+	$print_list_link .= "<a id='modal_window_link' href='".$base_url."output/print.php?section=list&amp;action=print' title='Print Your List of Entries and Info'>Imprima a sua lista de amostras.</a>"; 
 	$print_list_link .= "</span>";
 	
 	// Build Entry Fee Message
 	$entry_fee_message .= "<span class='adminSubNav'>";
 	$entry_fee_message .= "<span class='icon'><img src='".$base_url."images/money.png' border='0' alt='Entry Fees' title='Entry Fees' /></span>";
-	$entry_fee_message .= "You currently have ".readable_number($total_not_paid)." <strong>unpaid</strong>";
-	if ($total_not_paid == "1") $entry_fee_message .= " entry. "; 
-	else $entry_fee_message .= " entries. ";
-	$entry_fee_message .= "Your total entry fees are ".$currency_symbol.$total_entry_fees; 
+	$entry_fee_message .= "Você tem ".readable_number($total_not_paid);
+	if ($total_not_paid == "1") $entry_fee_message .= " amostra "; 
+	else $entry_fee_message .= " amostras ";
+	$entry_fee_message .=" <strong>não pagas</strong>. ";
+	$entry_fee_message .= "Seu total para todas as amostras é de  ".$currency_symbol.$total_entry_fees; 
 	if ((NHC) && ($_SESSION['brewerDiscount'] != "Y")) $entry_fee_message .= " (as a non-AHA member)"; 
-	$entry_fee_message .= ". You need to pay ".$currency_symbol.$total_to_pay.".";
+	$entry_fee_message .= ". Você ainda necessita pagar ".$currency_symbol.$total_to_pay.".";
 	$entry_fee_message .= "</span>";
 	
 	// Build Discount Fee Message
@@ -183,9 +184,9 @@ if (($registration_open >= 1) && ($entry_window_open >=1)) {
 	if ($totalRows_log == 0) $pay_fees_message .= "";
 	elseif (($total_not_paid > 0) && ($_SESSION['contestEntryFee'] > 0)) {
 		if ($totalRows_log_confirmed == $totalRows_log) { 
-			$pay_fees_message .= "<span class='icon'><img src='".$base_url."images/exclamation.png' border='0' alt='Entry Fees' title='Entry Fees' /></span>";
-			$pay_fees_message .= "<a href='".build_public_url("pay","default","default",$sef,$base_url)."'>Pay Your Fees</a>";
-			if ($_SESSION['prefsPayToPrint'] == "Y") $pay_fees_message .= " <em>** Please note that you will not be able to print your bottle labels and entry forms until you pay for your entries.</em>";
+			$pay_fees_message .= "<span class='icon'><img src='".$base_url."images/exclamation.png' border='0' alt='Pagamento de Amostras' title='Pagamento de Amostras' /></span>";
+			$pay_fees_message .= "<a href='".build_public_url("pay","default","default",$sef,$base_url)."'>Pague sua inscrição</a>";
+			if ($_SESSION['prefsPayToPrint'] == "Y") $pay_fees_message .= " <em>** Você não conseguirá imprimir as etiquetas das garrafas até o pagamento ter sido feito e confirmado.</em>";
 		}
 		else {
 			$pay_fees_message .= "<span class='icon'><img src='".$base_url."images/exclamation.png' border='0' alt='Entry Fees' title='Entry Fees' /></span>";
@@ -196,7 +197,7 @@ if (($registration_open >= 1) && ($entry_window_open >=1)) {
 	}
 	else {
 		$pay_fees_message .= "<span class='icon'><img src='".$base_url."images/thumb_up.png' border='0' alt='Entry Fees' title='Entry Fees' /></span>";
-		$pay_fees_message .= "Your fees have been paid. Thank you.";
+		$pay_fees_message .= "Sua inscrição foi paga. Obrigado!";
 		
 	}
 	$pay_fees_message .= "</span>";
@@ -335,13 +336,13 @@ do {
 	if ($action == "print") $entry_output .= "<td class='dataList bdr1B'>";
 	else $entry_output .= "<td class='dataList'>";
 	$entry_output .= $row_log['brewName']; 
-	if ($row_log['brewCoBrewer'] != "") $entry_output .= "<br><em>Co-Brewer: ".$row_log['brewCoBrewer']."</em>";
+	if ($row_log['brewCoBrewer'] != "") $entry_output .= "<br><em>Co-Cervejeiro: ".$row_log['brewCoBrewer']."</em>";
 	$entry_output .= "</td>";
 	
 	if ($action == "print") $entry_output .= "<td class='dataList bdr1B'>";
 	else $entry_output .= "<td class='dataList'>";
 	if ($row_styles['brewStyleActive'] == "Y") $entry_output .= $row_log['brewCategorySort'].$row_log['brewSubCategory'].": ".$row_styles['brewStyle']; 
-	elseif (empty($row_log['brewCategorySort'])) $entry_output .= "<span class='required'>Style NOT entered</span>";
+	elseif (empty($row_log['brewCategorySort'])) $entry_output .= "<span class='required'>Sem Estilo Selecionado</span>";
 	else $entry_output .= $entry_style;
 	//$entry_output .= "<span class='required'>Style entered NOT accepted.</span>";
 	$entry_output .= "</td>";
@@ -351,14 +352,14 @@ do {
 	if ($action == "print") $entry_output .= "<td class='dataList bdr1B'>";
 	else $entry_output .= "<td class='dataList'>";
 	if ($row_log['brewConfirmed'] == "0") { 
-		if ($action != "print") $entry_output .= "<span class='icon'><img src='".$base_url."images/exclamation.png' border='0' alt='Unconfirmed entry!' title='Unconfirmed entry! Click Edit to review and confirm the entry data.'></span>"; else $entry_output .= "Y";
+		if ($action != "print") $entry_output .= "<span class='icon'><img src='".$base_url."images/exclamation.png' border='0' alt='Amostra não confirmada!' title='Amostra não confirmada! Clique em Editar para revisar e confirmar os dados da amostra.'></span>"; else $entry_output .= "Y";
 	} 
 	elseif ((check_special_ingredients($entry_style,$_SESSION['prefsStyleSet'])) && ($row_log['brewInfo'] == "")) { 
-		if ($action != "print") $entry_output .= "<span class='icon'><img src='".$base_url."images/exclamation.png'  border='0' alt='Unconfirmed entry!' title='Unconfirmed entry! Click Edit to review and confirm the entry data.'></span>"; else $entry_output .= "Y";
+		if ($action != "print") $entry_output .= "<span class='icon'><img src='".$base_url."images/exclamation.png'  border='0' alt='Amostra não confirmada!' title='Amostra não confirmada! Clique em Editar para revisar e confirmar os dados da amostra.'></span>"; else $entry_output .= "Y";
 	} 
 	else { 
 		if ($action != "print") $entry_output .= yes_no($row_log['brewConfirmed'],$base_url);
-		else $entry_output .= "Yes";
+		else $entry_output .= "Sim";
 	} 
 	
 	$entry_output .= "</td>";
@@ -393,8 +394,8 @@ do {
 		if ($action == "print") $entry_output .= "<td class='dataList bdr1B'>";
 	else $entry_output .= "<td class='dataList'>";
 		if (minibos_check($row_log['id'],$judging_scores_db_table)) { 
-			if ($action != "print") $entry_output .= "<img src='".$base_url."images/tick.png'> Yes"; 
-			else $entry_output .= "Yes"; 
+			if ($action != "print") $entry_output .= "<img src='".$base_url."images/tick.png'> Sim"; 
+			else $entry_output .= "Sim"; 
 			}
 		else $entry_output .= "&nbsp;";
 		$entry_output .= "</td>";
@@ -415,23 +416,23 @@ do {
 	else $brewCategory = $row_log['brewCategory'];
 	
 	$edit_link = "";
-	$edit_link .= "<span class='icon'><img src='".$base_url."images/pencil.png' border='0' alt='Edit ".$row_log['brewName']."' title='Edit ".$row_log['brewName']."'></span>";
+	$edit_link .= "<span class='icon'><img src='".$base_url."images/pencil.png' border='0' alt='Edit ".$row_log['brewName']."' title='Editar ".$row_log['brewName']."'></span>";
 	$edit_link .= "<a href='".$base_url."index.php?section=brew&amp;action=edit&amp;id=".$row_log['id']; 
 	if ($row_log['brewConfirmed'] == 0) $edit_link .= "&amp;msg=1-".$brewCategory."-".$row_log['brewSubCategory']; 
 	
 	$edit_link .= "&amp;view=".$brewCategory."-".$row_log['brewSubCategory'];
-	$edit_link .= "' title='Edit ".$row_log['brewName']."'>Edit</a>&nbsp;&nbsp;";
+	$edit_link .= "' title='Editar ".$row_log['brewName']."'>Editar</a>&nbsp;&nbsp;";
 	
 	// Print Forms
 	$alt_title = "";
-	$alt_title .= "Print ";
-	if ((!NHC) && (($_SESSION['prefsEntryForm'] == "B") || ($_SESSION['prefsEntryForm'] == "M") || ($_SESSION['prefsEntryForm'] == "U") || ($_SESSION['prefsEntryForm'] == "N"))) $alt_title .= "Entry Form and ";
-	$alt_title .= "Bottle Labels ";
-	$alt_title .= "for ".$row_log['brewName'];
+	$alt_title .= "Imprimir ";
+	if ((!NHC) && (($_SESSION['prefsEntryForm'] == "B") || ($_SESSION['prefsEntryForm'] == "M") || ($_SESSION['prefsEntryForm'] == "U") || ($_SESSION['prefsEntryForm'] == "N"))) $alt_title .= "Formulário e  ";
+	$alt_title .= "Etiquetas ";
+	$alt_title .= "para ".$row_log['brewName'];
 	$link_text = "";
-	$link_text .= "Print ";
-	if ((!NHC) && (($_SESSION['prefsEntryForm'] == "B") || ($_SESSION['prefsEntryForm'] == "M") || ($_SESSION['prefsEntryForm'] == "U") || ($_SESSION['prefsEntryForm'] == "N"))) $link_text .= "Entry Form/"; 
-	$link_text .= "Bottle Labels";
+	$link_text .= "Imprimir ";
+	if ((!NHC) && (($_SESSION['prefsEntryForm'] == "B") || ($_SESSION['prefsEntryForm'] == "M") || ($_SESSION['prefsEntryForm'] == "U") || ($_SESSION['prefsEntryForm'] == "N"))) $link_text .= "Formulário/"; 
+	$link_text .= "Etiquetas ";
 	$print_forms_link =  build_action_link("printer",$base_url,$_SESSION['user_id'],$go,"delete",$filter,$row_log['id'],$brewing_db_table,$alt_title,2,$link_text);
 	
 	// Print Recipe
@@ -439,7 +440,7 @@ do {
 	
 	if ($comp_entry_limit) $warning_append = "\nAlso, you will not be able to add another entry since the entry limit for the competition has been reached. Click Cancel in this box and then edit the entry instead if you wish to keep it."; else $warning_append = "";
 	
-	if ($entry_window_open == 1) $delete_link = build_action_link("bin_closed",$base_url,$section,$go,"delete",$filter,$row_log['id'],$brewing_db_table,"Delete ".$row_log['brewName']."? This cannot be undone. ".$warning_append,1,"Delete");
+	if ($entry_window_open == 1) $delete_link = build_action_link("bin_closed",$base_url,$section,$go,"delete",$filter,$row_log['id'],$brewing_db_table,"Apagar ".$row_log['brewName']."? Essa ação não pode ser desfeita. ".$warning_append,1,"Apagar");
 
 	if ((judging_date_return() > 0) && ($action != "print")) {
 		
@@ -519,19 +520,19 @@ if (($totalRows_log > 0) && ($entry_window_open >= 1)) {
 <table class="dataTable" id="sortable">
 <thead>
  <tr>
-  	<th class="dataHeading bdr1B" width="5%">Entry #</th>
-  	<th class="dataHeading bdr1B" width="15%">Entry Name</th>
-  	<th class="dataHeading bdr1B" width="15%">Style</th>
-  	<th class="dataHeading bdr1B" width="8%">Confirmed?</th> 
-  	<th class="dataHeading bdr1B" width="8%">Paid?</th> 
-    <th class="dataHeading bdr1B" width="12%">Updated</th>
+  	<th class="dataHeading bdr1B" width="5%">Amostra #</th>
+  	<th class="dataHeading bdr1B" width="15%">Nome da Amostra</th>
+  	<th class="dataHeading bdr1B" width="15%">Estilo</th>
+  	<th class="dataHeading bdr1B" width="8%">Confirmada?</th> 
+  	<th class="dataHeading bdr1B" width="8%">Pago?</th> 
+    <th class="dataHeading bdr1B" width="12%">Atualizado</th>
   	<?php if ($show_scores) { ?>
   	<th class="dataHeading bdr1B" width="10%">Score</th>
     <th class="dataHeading bdr1B" width="10%">Mini-BOS?</th>
   	<th class="dataHeading bdr1B" width="10%">Winner?</th>
   	<?php } ?>
     <?php if ($action != "print") { ?>
-  	<th class="dataHeading bdr1B">Actions</th>
+  	<th class="dataHeading bdr1B">Ações</th>
     <?php } ?>
  </tr>
 </thead>
@@ -540,7 +541,7 @@ if (($totalRows_log > 0) && ($entry_window_open >= 1)) {
 </tbody>
 </table>
 <?php }
-if ($entry_window_open == 0) echo sprintf("<p>You will be able to add entries on or after %s.</p>",$entry_open); 
+if ($entry_window_open == 0) echo sprintf("<p>Você vai poder cadastrar suas amostras após %s.</p>",$entry_open); 
 ?>
 
 <!-- Page Rebuild completed 08.27.15 --> 

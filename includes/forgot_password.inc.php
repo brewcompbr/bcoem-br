@@ -48,15 +48,15 @@ if (($action == "email") && ($id != "default")) {
 	
 	$to_recipient = $first_name." ".$last_name;
 	$to_email = $row_forgot['user_name'];
-	$subject = $_SESSION['contestName'].": ID Verification Request";
+	$subject = $_SESSION['contestName'].": Verificação de Segurança";
 	$message = "<html>" . "\r\n";
 	$message .= "<body>" . "\r\n";
 	$message .= "<p>".$first_name.",</p>";
-	$message .= "<p>A request was made to verify the account at the ".$_SESSION['contestName']." competition website using the ID Verfication email function. If you did not initiate this, please contact the competition's organizer.</p>";
-	$message .= "<table cellpadding='0' border='0'><tr><td><strong>ID Verfication Question:</strong></td><td>".$row_forgot['userQuestion']."</td>";
-	$message .= "<tr><td><strong>ID Verfication Answer:</strong></td><td>".$row_forgot['userQuestionAnswer']."</td></tr></table>";
-	$message .= "<p><em>*The ID Verification Answer is case sensitive.</em></p>";
-	$message .= "<p>Please do not reply to this email as it is automatically generated. The originating account is not active or monitored.</p>";
+	$message .= "<p>Um pedido de verificação de sua conta na competição  ".$_SESSION['contestName']." foi requerida. Se você não solicitou esse email, entre em contato com a organização.</p>";
+	$message .= "<table cellpadding='0' border='0'><tr><td><strong>Questão de segurança:</strong></td><td>".$row_forgot['userQuestion']."</td>";
+	$message .= "<tr><td><strong>Resposta:</strong></td><td>".$row_forgot['userQuestionAnswer']."</td></tr></table>";
+	$message .= "<p><em>*Digite a resposta como recebida nesse email.</em></p>";
+	$message .= "<p>Por favor não responda a esse email. Ele é gerado automáticamente.</p>";
 	$message .= "</body>" . "\r\n";
 	$message .= "</html>";
 	

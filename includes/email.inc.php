@@ -2,8 +2,8 @@
 /**
  * To validate an email address according to RFCs 5321, 5322 and others
  * 
- * Copyright © 2008-2011, Dominic Sayers					<br>
- * Test schema documentation Copyright © 2011, Daniel Marschall			<br>
+ * Copyright ï¿½ 2008-2011, Dominic Sayers					<br>
+ * Test schema documentation Copyright ï¿½ 2011, Daniel Marschall			<br>
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without modification,
@@ -1082,8 +1082,8 @@ if (!defined('ISEMAIL_VALID')) {
 	return ($diagnose) ? $final_status : ($final_status < ISEMAIL_THRESHOLD);
 }
 $email = $_GET['email'];
-if (is_email($email)) echo "Email Format: <span style='color:green'>Valid</span>";
-else echo "Email Format: <span style='color:red'>Invalid!</span>";
+if (is_email($email)) echo "Email Format: <span style='color:green'>Email VÃ¡lido</span>";
+else echo "Email Format: <span style='color:red'>Email InvÃ¡lido!</span>";
 //if (!preg_match('/^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,3})$/i', $email)) echo "Email Format: <span style='color:red'>Invalid!</span>";
 //else echo "Email Format: <span style='color:green'>Valid</span>";
 //if (filter_var($email, FILTER_VALIDATE_EMAIL)) echo "Email Format: <span style='color:green'>Valid</span>";

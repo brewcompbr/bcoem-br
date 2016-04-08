@@ -16,7 +16,7 @@ if(isSet($_POST['user_name'])) {
 	else {
 		$sql_check = mysql_query("SELECT user_name FROM $users_db_table WHERE user_name='$user_name'");
 		
-		if (mysql_num_rows($sql_check)) echo '<span style="color:red">The email address you entered is already in use. Please choose another.</span>';
+		if (mysql_num_rows($sql_check)) echo '<span style="color:red">O email informado já foi utilizado. Por favor informe outro.</span>';
 		else echo 'OK';
 		
 	} // end else NHC

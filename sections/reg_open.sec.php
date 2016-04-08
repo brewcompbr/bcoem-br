@@ -60,55 +60,57 @@ $header1_8 = "";
 $page_info8 = "";
 
 
-$header1_2 .= "<h2>Registration Window</h2>";
-$page_info2 .= "<p><strong>Online registration</strong> on this site will take place between the following dates:</p> ";
+$header1_2 .= "<h2>Período de Registro de Usuários</h2>";
+$page_info2 .= "<p><strong>O registro online</strong> de candidatos nesse site será realizado entre as seguintes datas:</p> ";
 $page_info2 .= "<ul>";
-$page_info2 .= sprintf("<li>Open: %s.</li>",$reg_open);
-$page_info2 .= sprintf("<li>Close: %s.</li>",$reg_closed);
+$page_info2 .= sprintf("<li>Início: %s.</li>",$reg_open);
+$page_info2 .= sprintf("<li>Fim: %s.</li>",$reg_closed);
 $page_info2 .= "</ul>";
-$page_info2 .= sprintf("<p><em>** Please note: The Registration Window open date is for registration of your personal information only. You will not be able to add your entries into the system until the Entry Window opens on %s.</em></p>",$entry_open);
-if (($registration_open == "1") && (!isset($_SESSION['loginUsername']))) $page_info2 .= " <p>If you have already registered, please <a href='".build_public_url("login","default","default",$sef,$base_url)."'>log in</a> to add, view, edit, or delete your entries as well as indicate that you are willing to judge or steward.</p>";
-$page_info2 .= "<h2>Entry Window</h2>";
-$page_info2 .= "<p>You will be able to add your entries into the system and entries will be accepted at our shipping and drop-off locations between the following dates:</p>";
+$page_info2 .= sprintf("<p><em>** Atenção: Este período é somente para o cadastro de suas informações pessoais. Você vai poder adicionar e modificar as amostras até o fim do período de cadastro de amostras: %s.</em></p>",$entry_close);
+if (($registration_open == "1") && (!isset($_SESSION['loginUsername']))) $page_info2 .= " <p>Se você já se registrou, por favor <a href='".build_public_url("login","default","default",$sef,$base_url)."'>faça seu login</a> para adicionar, visualizar, editar ou remover amostras ou para indicar sua intenção de ser um juiz ou auxiliar.</p>";
+if (($registration_open == "1") && (!isset($_SESSION['loginUsername']))) $page_info2 .= " <p>Caso contrário, por favor <a href='".build_public_url("register","default","default",$sef,$base_url)."'>registre sua conta</a>.</p>";
+$page_info2 .= "<h2>Período de Registro de Amostras</h2>";
+$page_info2 .= "<p>Você poderá cadastrar suas amostras no sistema nesse site entre as seguintes datas:</p>";
 $page_info2 .= "<ul>";
-$page_info2 .= sprintf("<li>Open: %s.</li>",$entry_open);
-$page_info2 .= sprintf("<li>Close: %s.</li>",$entry_closed);
+$page_info2 .= sprintf("<li>Início: %s.</li>",$entry_open);
+$page_info2 .= sprintf("<li>Fim: %s.</li>",$entry_closed);
 $page_info2 .= "</ul>";
 
-$header1_3 .= "<h2>Judging and Stewarding</h2>"; 
+$header1_3 .= "<h2>Juízes e auxiliares</h2>"; 
 
 if (($registration_open == "1") && (!isset($_SESSION['loginUsername']))) { 
-	$page_info3 .= "<p>If you <em>have not</em> registered and are willing to be a judge or steward, <a href='".build_public_url("register","judge","default",$sef,$base_url)."'>please register</a>.</p>";
-	$page_info3 .= "<p>If you <em>have</em> registered, <a href='".build_public_url("login","default","default",$sef,$base_url)."'>log in</a> and then choose <em>Edit My Info</em> to indicate that you are willing to judge or  steward.</p>";
+	$page_info3 .= "<p>Se você <em>não</em> se registrou e quer ser um juíz ou auxiliar, <a href='".build_public_url("register","judge","default",$sef,$base_url)."'>registre-se aqui</a>.</p>";
+	$page_info3 .= "<p>Se você <em>já</em> se registrou, <a href='".build_public_url("login","default","default",$sef,$base_url)."'>faça o login</a> e selecione <em>Meus Dados</em> parai ndicar que você deseja ser um juíz ou auxiliar.</p>";
+	$page_info3 .= "<p>Todos os candidatos a juízes do concurso serão avaliados pela organização. Você receberá um email caso seja aprovado.Caso contrário seu cadastro será alterado para um participante comum.</p>";
 }
 
 elseif (($registration_open == "1") && (isset($_SESSION['loginUsername']))) { 
-	$page_info3 .= "<p>Since you have already registered, you can <a href='".build_public_url("list","default","default",$sef,$base_url)."'>check your info</a> to see whether you have indicated that you are willing to judge and/or steward.</p>";
+	$page_info3 .= "<p>Já que você já se registrou, você pode <a href='".build_public_url("list","default","default",$sef,$base_url)."'>visualizar seus dados</a> para ver se você se candidatou a juíz ou auxiliar.</p>";
 	$page_info3 .= "";
 }
-else $page_info3 .= sprintf("<p>If you are willing to judge or steward, please return to register on or after %s.</p>",$judge_open);
+else $page_info3 .= sprintf("<p>Se você quer ser um juíz ou auxiliar, por favor retorne para se registrar após %s.</p>",$judge_open);
 
-$header1_4 .= "<h2>Entries</h2>"; 
+$header1_4 .= "<h2>Amostras</h2>"; 
 $page_info4 .= "<p>";
-$page_info4 .= sprintf("You will be able to your entries into the system and entries will be accepted at drop-off and shipping locations between %s and %s. ",$entry_open,$entry_closed);
+$page_info4 .= sprintf("Você poderá cadastrar suas amostras no sistema entre %s e %s. ",$entry_open,$entry_closed);
 $page_info4 .= "</p>";
 $page_info4 .= "<p>";
-$page_info4 .= "All entries must be received by our shipping location ";
-if ($totalRows_dropoff > 0) $page_info4 .= "or at a drop-off location ";
-$page_info4 .= sprintf("by %s and will not be accepted after that date/time. ",$entry_closed);
-$page_info4 .= "For details, see the <a href='".build_public_url("entry","default","default",$sef,$base_url)."'>Entry Information</a> page.</p>";
+$page_info4 .= "Todas as entradas devem ser, ou postadas por transportadora (ou correios) e recebidas no local de recebimento ";
+if ($totalRows_dropoff > 0) $page_info4 .= "ou entregues pessoalmente ";
+$page_info4 .= sprintf("até %s e não vão ser aceitas após essa data.","17:30 horas de 26 de novembro de 2015");//$entry_closed);
+$page_info4 .= "Para mais detalhes acesse a página de <a href='".build_public_url("entry","default","default",$sef,$base_url)."'>Informações sobre Amostras</a></p>";
 if ($row_limits['prefsEntryLimit'] != "") {
-	$header1_5 .= "<h2>Entry Limit</h2>";
-	$page_info5 .= sprintf("<p>There is a limit of %s entries for this competition.</p>",readable_number($row_limits['prefsEntryLimit'])." (".$row_limits['prefsEntryLimit'].")");
+	$header1_5 .= "<h2>Limite de amostras</h2>";
+	$page_info5 .= sprintf("<p>Haverá um limite de %s amostras para essa competição.</p>",readable_number($row_limits['prefsEntryLimit'])." (".$row_limits['prefsEntryLimit'].")");
 	
 }
 
 if ((!empty($row_limits['prefsUserEntryLimit'])) || (!empty($row_limits['prefsUserSubCatLimit'])) || (!empty($row_limits['prefsUSCLExLimit']))) {
-	$header1_8 .= "<h2>Per Entrant Limits</h2>";
+	$header1_8 .= "<h2>Amostras por Participante</h2>";
 	
 	if (!empty($row_limits['prefsUserEntryLimit'])) {
-		if ($row_limits['prefsUserEntryLimit'] == 1) $page_info8 .= sprintf("<p>You are limited to %s entry for this competition.</p>",readable_number($row_limits['prefsUserEntryLimit'])." (".$row_limits['prefsUserEntryLimit'].")");
-		else $page_info8 .= sprintf("<p>You are limited to %s entries for this competition.</p>",readable_number($row_limits['prefsUserEntryLimit'])." (".$row_limits['prefsUserEntryLimit'].")");
+		if ($row_limits['prefsUserEntryLimit'] == 1) $page_info8 .= sprintf("<p>Você terá o limite de %s amostra para essa competição.</p>",readable_number($row_limits['prefsUserEntryLimit'])." (".$row_limits['prefsUserEntryLimit'].")");
+		else $page_info8 .= sprintf("<p>Você terá o limite de %s amostras para essa competição.</p>",readable_number($row_limits['prefsUserEntryLimit'])." (".$row_limits['prefsUserEntryLimit'].")");
 	}
 	
 	if (!empty($row_limits['prefsUserSubCatLimit'])) { 
@@ -133,16 +135,16 @@ if ((!empty($row_limits['prefsUserEntryLimit'])) || (!empty($row_limits['prefsUs
 }
 
 if ($entry_window_open == 1) {
-	$header1_6 .= "<h2>Enter Your Brews</h2>"; 
+	$header1_6 .= "<h2>Cadastre suas Cervejas</h2>"; 
 	$page_info6 .= "<p>";
-	$page_info6 .= "To enter your brews, ";
-	if (!isset($_SESSION['loginUsername'])) $page_info6 .= "please proceed through the <a href='".build_public_url("register","default","default",$sef,$base_url)."'>registration process</a>.";
-	else $page_info6 .= "use the <a href='".build_public_url("brew","entry","add",$sef,$base_url)."'>add an entry form</a>.";
+	$page_info6 .= "Para cadastrar suas cervejas, ";
+	if (!isset($_SESSION['loginUsername'])) $page_info6 .= "por favor <a href='".build_public_url("register","default","default",$sef,$base_url)."'>registre-se aqui</a>.";
+	else $page_info6 .= "acesse <a href='".build_public_url("brew","entry","add",$sef,$base_url)."'>aqui</a>.";
 	$page_info6 .= "</p>";
 }
 
-if ($totalRows_judging > 1) $header1_7 .= "<h2>Judging Locations and Dates</h2>";
-else $header1_7 .= "<h2>Judging Location and Date</h2>";
+if ($totalRows_judging > 1) $header1_7 .= "<h2>Datas e Locais de Julgamento</h2>";
+else $header1_7 .= "<h2>Datas e Locais de Julgamento</h2>";
 if ($totalRows_judging == 0) $page_info7 .= "<p>The competition judging date is yet to be determined. Please check back later.</p>";
 else {
 	do {

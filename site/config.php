@@ -17,13 +17,12 @@ REFER TO YOUR WEB HOST'S DOCUMENTATION regarding connecting to MySQL via PHP - v
 Generally, this line is left alone.
 */
 $hostname = "localhost";
-
 /* 
 Provide the username for your database (generally the same as your login for your web hosting company).
 INSERT YOUR USERNAME BETWEEN THE DOUBLE-QUOTATION MARKS ("").
 For example, if your username is fred then the line should read $username = "fred".
 */
-$username = "";
+$username = "acervagaucha";
 
 /* 
 INSERT YOUR PASSWORD BETWEEN THE DOUBLE-QUOTATION MARKS ("").
@@ -35,7 +34,7 @@ $password = "";
 The following line is the name of your MySQL database you set up already.  
 If you haven't set up the database yet, please refer to http://help.brewcompetition.com/index.html?installation.html for setup instructions. 
 */
-$database = "";
+$database = "acervagaucha";
 
 /* 
 This line strings the information together and connects to MySQL.  
@@ -47,7 +46,7 @@ $connection = mysql_connect($hostname, $username, $password) or trigger_error(my
 Do not change the following line.
 */
 $brewing = $connection; 
-
+mysql_query("SET NAMES 'utf8'", $brewing);
 
 /******End MySQL Connections*******
 
@@ -99,7 +98,7 @@ $prefix = "comp1_";
 ******************************************************************************
 */
 
-$prefix = "";
+$prefix = "acervars2015_";
 
 
 /*
@@ -138,7 +137,7 @@ Directions are in the .htaccess file.
 
 */
 
-$sub_directory = "";
+$sub_directory = "/estadual";
 
 /*
 ******************************************************************************

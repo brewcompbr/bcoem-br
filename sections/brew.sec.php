@@ -378,8 +378,8 @@ else $collapse_icon = '<span class="icon"><img src="'.$base_url.'images/add.png"
 <input type="hidden" name="brewBrewerLastName" value="<?php echo $_SESSION['brewerLastName']; ?>">
 <?php } ?> 
 <input type="hidden" name="brewJudgingNumber" value="<?php echo $row_log['brewJudgingNumber']; ?>">
-<h2>Required Information</h2>
-<p><input type="submit" class="button" value="Submit Entry" alt="Submit Entry" <?php if (($action == "add") && ($remaining_entries == 0) && ($_SESSION['userLevel'] == 2)) echo "DISABLED"; ?> /></p>
+<h2>Dados Obrigatórios</h2>
+<p><input type="submit" class="button" value="Enviar Amostra" alt="Enviar Amostra" <?php if (($action == "add") && ($remaining_entries == 0) && ($_SESSION['userLevel'] == 2)) echo "DISABLED"; ?> /></p>
 <table>
 <?php
 if (($filter == "admin") || ($filter == "default")) $brewer_id = $_SESSION['user_id']; else $brewer_id = $filter; 
@@ -389,7 +389,7 @@ $brewer_info = explode("^",$brewer_info);
 
 ?>
 <tr>
-   <td class="dataLabel">Brewer:</td>
+   <td class="dataLabel">Cervejeiro:</td>
    <td class="data">
    <?php echo $brewer_info[0]." ".$brewer_info[1]; ?>
    <input type="hidden" name="brewBrewerID" value="<?php echo $brewer_info[7]; ?>">
@@ -397,7 +397,7 @@ $brewer_info = explode("^",$brewer_info);
    <td class="data">&nbsp;</td>
 </tr>
 <tr>
-  <td class="dataLabel">Co-Brewer:</td>
+  <td class="dataLabel">Co-Cervejeiro:</td>
   <td class="data">
   <?php if ((NHC) && ($prefix == "final_") && ($action == "edit") && ($_SESSION['userLevel'] == 2)) echo $row_log['brewCoBrewer']; else { ?>
   <input type="text"  name="brewCoBrewer" value="<?php if ($disable_fields) echo "Not Available"; if ($action == "edit") echo $row_log['brewCoBrewer']; ?>" size="30" <?php if ($disable_fields) echo "DISABLED";  ?>>
@@ -405,7 +405,7 @@ $brewer_info = explode("^",$brewer_info);
   </td>
 </tr>
 <tr>
-   <td class="dataLabel">Entry Name:</td>
+   <td class="dataLabel">Nome da Amostra:</td>
    <td class="data">
     <?php if ((NHC) && ($prefix == "final_") && ($action == "edit") && ($_SESSION['userLevel'] == 2)) { ?>
     <?php echo $row_log['brewName']; ?>
@@ -414,10 +414,10 @@ $brewer_info = explode("^",$brewer_info);
    <input type="text"  name="brewName" value="<?php if ($disable_fields) echo "Not Available"; if ($action == "edit") echo $row_log['brewName']; ?>" size="30" <?php if ((($action == "add") && ($remaining_entries == 0) && ($registration_open == 1) && ($filter != "default")) || (($action == "add") && ($registration_open == "2") && ($_SESSION['userLevel'] > 1))) echo "DISABLED";  ?>>
    <?php } ?>
    </td>
-   <td class="data"><?php if (!NHC) { ?><span class="required">Required for all entries</span><?php } ?></td>
+   <td class="data"><?php if (!NHC) { ?><span class="required">Obrigatório para todas as amostras</span><?php } ?></td>
 </tr>
 <tr>
-   <td class="dataLabel"><?php echo str_ireplace("2"," 2",$_SESSION['prefsStyleSet']); ?> Style:</td>
+   <td class="dataLabel">Estilo <?php echo str_ireplace("2"," 2",$_SESSION['prefsStyleSet']); ?>:</td>
    <td class="data">
    <?php if ((NHC) && ($prefix == "final_") && ($action == "edit") && ($_SESSION['userLevel'] == 2)) { ?>
    <input type="hidden" name="brewStyle" id="type" value="<?php echo $view; ?>"><?php echo $row_log['brewCategory'].$row_log['brewSubCategory'].": ".$row_log['brewStyle']; ?>
@@ -471,15 +471,16 @@ $brewer_info = explode("^",$brewer_info);
    	</select>
    	<?php } ?>
    	</td>
-   	<td class="data"><span class="required">Required for all entries</span><span class="icon"><img src="<?php echo $base_url; ?>images/information.png" /></span><a id="modal_window_link" href="<?php echo $base_url; ?>output/styles.php">View Accepted Styles</a></td>
+   	<td class="data"><span class="required">Obrigatório para todas as amostras</span><span class="icon"><img src="<?php echo $base_url; ?>images/information.png" /></span><a id="modal_window_link" href="<?php echo $base_url; ?>output/styles.php"> Ver informações dos Estilos</a></td>
 </tr>
 <tr>
 	<td class="dataLabel"></td>
     <td class="data">
-    &spades; = Specific Type, Special Ingredients and/or Classic Style Required<br />
+   <!--  &spades; = Specific Type, Special Ingredients and/or Classic Style Required<br />
     &diams; = Strength Required<br />
     &clubs; = Carbonation Level Required<br />
     &hearts; = Sweetness Level Required
+     -->
     </td>
 </tr>
 </table>
@@ -898,7 +899,7 @@ if (NHC) { ?>
 </table>
 </div>
 <?php } ?>
-<p><input type="submit" class="button" value="Submit Entry" alt="Submit Entry" <?php if ($disable_fields) echo "DISABLED"; ?> /></p>
+<p><input type="submit" class="button" value="Enviar Amostra" alt="Enviar Amostra" <?php if ($disable_fields) echo "DISABLED"; ?> /></p>
 <input type="hidden" name="brewConfirmed" value="1">
 <input type="hidden" name="relocate" value="<?php echo $_SERVER['HTTP_REFERER']; ?>">
 </form>

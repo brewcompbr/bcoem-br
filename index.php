@@ -8,6 +8,7 @@
 require('paths.php');
 require(CONFIG.'bootstrap.php');
 include(DB.'mods.db.php');
+include(CONFIG.'psconfig.php');
 
 if (TESTING) {
 	$mtime = microtime(); 
@@ -32,26 +33,26 @@ if (($registration_open == "1") && (!$ua)) {
 	if ($comp_entry_limit) {
 		
 		if ($section != "admin") { 
-			$closed_msg .= "<div class='closed'>The limit of ".readable_number($row_limits['prefsEntryLimit'])." (".$row_limits['prefsEntryLimit'].") entries has been reached. No further entries will be accepted."; 
-			if (!isset($_SESSION['loginUsername'])) $closed_msg .= " However, judges and stewards may still <a href='".build_public_url("register","judge","default",$sef,$base_url)."'>register here</a>."; 
+			$closed_msg .= "<div class='closed'>O limite de ".readable_number($row_limits['prefsEntryLimit'])." (".$row_limits['prefsEntryLimit'].") inscrições foi atingido. Nenhuma outra inscrição será aceita."; 
+			if (!isset($_SESSION['loginUsername'])) $closed_msg .= " Juízes e auxiliares ainda podem realizar seu  <a href='".build_public_url("register","judge","default",$sef,$base_url)."'>cadastro aqui</a>."; 
 			$closed_msg .="</div>"; 
 		}
 	}
 }
 
 if (($registration_open == "0") && (!$ua) && ($section != "admin")) {
-	if (!isset($_SESSION['loginUsername'])) $registration_open_msg .= "<div class='closed'>General registration will open ".$reg_open.".</div>";
-	if ((!isset($_SESSION['loginUsername'])) && ($judge_window_open == "0")) $judge_reg_open_msg .= "<div class='info'>Judge/steward registration will open ".$judge_open.".</div>";
-    if ((!isset($_SESSION['loginUsername'])) && ($section != "register") && ($judge_window_open == "1")) $judge_willing_msg .= "<div class='info'>If you are willing to be a judge or steward, please <a href='".build_public_url("register","judge","default",$sef,$base_url)."'>register here</a>.<br>Judge/steward registration will close ".$judge_closed.".</div>"; 
+	if (!isset($_SESSION['loginUsername'])) $registration_open_msg .= "<div class='closed'>O cadastro de participantes será aberto na ".$reg_open.".</div>";
+	if ((!isset($_SESSION['loginUsername'])) && ($judge_window_open == "0")) $judge_reg_open_msg .= "<div class='info'>O cadastro de juízes e ajudantes será aberto em ".$judge_open.".</div>";
+    if ((!isset($_SESSION['loginUsername'])) && ($section != "register") && ($judge_window_open == "1")) $judge_willing_msg .= "<div class='info'>Se você quer ser um juíz ou auxiliar, por favor <a href='".build_public_url("register","judge","default",$sef,$base_url)."'>cadastre-se aqui</a>.<br>O cadastro de juízes e auxiliares terminará em ".$judge_closed.".</div>"; 
 }
 
 if (($registration_open == "2") && (!$ua)) {
 	if ((($section != "admin") || ($_SESSION['userLevel'] > "1")) && (judging_date_return() > 0)) { 
     	$registration_closed_msg .= "<div class='closed'>";
-		$registration_closed_msg .= "Registration closed ".$reg_closed.".";
-		if ($entry_window_open == "1") $registration_closed_msg .= "<br>Participants who already have registered accounts may add entries into the system until ".$entry_closed.".";
+		$registration_closed_msg .= "Cadastros encerrados ".$reg_closed.".";
+		if ($entry_window_open == "1") $registration_closed_msg .= "<br>Participantes que já se cadastraram podem adicionar amostras no sistema até ".$entry_closed.".";
 		$registration_closed_msg .= "</div>";
-		if ((!isset($_SESSION['loginUsername'])) && ($section != "register") && ($judge_window_open == "1")) $registration_closed_msg .= "<div class='info'>If you are willing to be a judge or steward, please <a href='".build_public_url("register","judge","default",$sef,$base_url)."'>register here</a>.<br>Judge/steward registration will close ".$judge_closed.".</div>";
+		if ((!isset($_SESSION['loginUsername'])) && ($section != "register") && ($judge_window_open == "1")) $registration_closed_msg .= "<div class='info'>Se você quer ser um juíz ou auxiliar, por favor <a href='".build_public_url("register","judge","default",$sef,$base_url)."'>cadastre-se aqui</a>.<br>O cadastro de juízes e auxiliares terminará em ".$judge_closed.".</div>";
 	}
 }
 
@@ -97,6 +98,10 @@ if (($registration_open == "2") && (!$ua)) {
 
 		});
 	</script>
+	
+<?php if (($section == "brew") || ($section == "brewer") || ($section == "user")  || ($section == "register") || ($section == "contact")) 
+include(INCLUDES.'form_check.inc.php'); 
+?>
 <script type="text/javascript" src="<?php echo $base_url; ?>js_includes/delete.js"></script>
 <script type="text/javascript" src="<?php echo $base_url; ?>js_includes/jump_menu.js" ></script>
 <script type="text/javascript" src="<?php echo $base_url; ?>js_includes/smoothscroll.js" ></script>
@@ -106,10 +111,8 @@ if (($registration_open == "2") && (!$ua)) {
 if ($section == "admin") { ?>
 <script type="text/javascript" src="<?php echo $base_url; ?>js_includes/tinymce/jscripts/tiny_mce/tiny_mce.js"></script>
 <script type="text/javascript" src="<?php echo $base_url; ?>js_includes/tinymce.init.js"></script>
-<?php } 
-if (($section == "brew") || ($section == "brewer") || ($section == "user")  || ($section == "register") || ($section == "contact")) 
-include(INCLUDES.'form_check.inc.php'); 
-?>
+<?php } ?> 
+
 <!--
 <script type="text/javascript">
 var _gaq = _gaq || [];

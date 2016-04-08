@@ -50,7 +50,7 @@ include(DB.'judging_locations.db.php');
 include(DB.'styles.db.php');
 include(DB.'entry_info.db.php');
 
-$print_page_link = "<p><span class='icon'><img src='".$base_url."images/printer.png' border='0' alt='Print' title='Print' /></span><a id='modal_window_link' class='data' href='".$base_url."output/print.php?section=".$section."&amp;action=print' title='Print'>Print This Page</a></p>";
+$print_page_link = "<p><span class='icon'><img src='".$base_url."images/printer.png' border='0' alt='Imprima essa Página' title='Imprima essa Página' /></span><a id='modal_window_link' class='data' href='".$base_url."output/print.php?section=".$section."&amp;action=print' title='Print'>Imprima essa Página</a></p>";
 $competition_logo = "<img src='".$base_url."user_images/".$_SESSION['contestLogo']."' width='".$_SESSION['prefsCompLogoSize']."' style='float:right; padding: 5px 0 5px 5px' alt='Competition Logo' title='Competition Logo' />";
 
 $contact_count = get_contact_count();
@@ -108,35 +108,35 @@ $page_info16 = "";
 // Build Anchor Links
 $anchor_links = "";
 if ($contact_count > 0) {
-	if ($contact_count == 1) $anchor_links .= "<a href='#officials'>Competition Official</a><br />";
-	else $anchor_links .= "<a href='#officials'>Competition Officials</a><br />";
+	if ($contact_count == 1) $anchor_links .= "<a href='#officials'>Comissão Organizadora</a><br />";
+	else $anchor_links .= "<a href='#officials'>Comissão Organizadora</a><br />";
 }
-$anchor_links .= "<a href='#reg_window'>Registration Window</a><br />";
-$anchor_links .= "<a href='#entry_window'>Entry Window</a><br />";
+$anchor_links .= "<a href='#reg_window'>Período de Registro de Participantes</a><br />";
+$anchor_links .= "<a href='#entry_window'>Período de Registro de Amostras</a><br />";
 if ($row_limits['prefsEntryLimit'] != "") {
-	$anchor_links .= "<a href='#entry_limit'>Entry Limit</a><br />";
+	$anchor_links .= "<a href='#entry_limit'>Limite de Amostras</a><br />";
 }
-$anchor_links .= "<a href='#entry'>Entry Fees</a><br />";
-$anchor_links .= "<a href='#payment'>Payment</a><br />";
-if ($totalRows_judging == 1) $anchor_links .= "<a href='#judging'>Judging Date</a><br />";
-else $anchor_links .= "<a href='#judging'>Judging Dates</a><br />";
-$anchor_links .= "<a href='#categories'>Categories Accepted</a><br />";
-if ($row_contest_info['contestBottles'] != "") 	$anchor_links .= "<a href='#bottle'>Bottle Acceptance Rules</a><br />";
-if ($_SESSION['contestShippingAddress'] != "") 	$anchor_links .= "<a href='#shipping'>Shipping Location and Address</a><br />";
+$anchor_links .= "<a href='#entry'>Taxa de Inscrição</a><br />";
+$anchor_links .= "<a href='#payment'>Pagamento</a><br />";
+if ($totalRows_judging == 1) $anchor_links .= "<a href='#judging'>Datas dos Julgamentos</a><br />";
+else $anchor_links .= "<a href='#judging'>Local e Data dos Julgamentos</a><br />";
+$anchor_links .= "<a href='#categories'>Categorias Aceitas</a><br />";
+if ($row_contest_info['contestBottles'] != "") 	$anchor_links .= "<a href='#bottle'>Regras de Aceitação de Garrafas</a><br />";
+if ($_SESSION['contestShippingAddress'] != "") 	$anchor_links .= "<a href='#shipping'>Local Para o Envio de Garrafas</a><br />";
 if ($totalRows_dropoff > 0) {
-	if ($totalRows_dropoff == 1) $anchor_links .= "<a href='#drop'>Drop Off Location</a><br />";
-	else $anchor_links .= "<a href='#drop'>Drop Off Locations</a><br />";
+	if ($totalRows_dropoff == 1) $anchor_links .= "<a href='#drop'>Local para Entrega de Garrafas</a><br />";
+	else $anchor_links .= "<a href='#drop'>Locais para Entrega de Garrafas</a><br />";
 }
 if ($row_contest_info['contestBOSAward'] != "")	$anchor_links .= "<a href='#bos'>Best of Show</a><br />";
-if ($row_contest_info['contestAwards'] != "") 	$anchor_links .= "<a href='#awards'>Awards</a><br />";
-if ($_SESSION['contestAwardsLocName'] != "") 	$anchor_links .= "<a href='#ceremony'>Awards Ceremony</a><br />";
+if ($row_contest_info['contestAwards'] != "") 	$anchor_links .= "<a href='#awards'>Premiações</a><br />";
+if ($_SESSION['contestAwardsLocName'] != "") 	$anchor_links .= "<a href='#ceremony'>Cerimônia de Premiação</a><br />";
 if ($row_contest_info['contestCircuit'] != "") 	$anchor_links .= "<a href='#circuit'>Circuit Qualification</a>";
 
 // Competition Official
 if ($contact_count > 0) {
-	if ($contact_count == 1) $header1_1 .= "<a name='officials'></a><h2>Competition Official</h2>";
-	else $header1_1 .= "<a name='officials'></a><h2>Competition Officials</h2>";
-	if ($action != "print") $page_info1 .= sprintf("<p>You can send an email to any of the following individuals via the <a href='%s'>Contact</a> section.</p>",build_public_url("contact","default","default",$sef,$base_url));
+	if ($contact_count == 1) $header1_1 .= "<a name='officials'></a><h2>Comissão Organizadora</h2>";
+	else $header1_1 .= "<a name='officials'></a><h2>Comissão Organizadora</h2>";
+	if ($action != "print") $page_info1 .= sprintf("<p>Você pode enviar um email para os organizadores através do menu <a href='%s'>Contato</a>.</p>",build_public_url("contact","default","default",$sef,$base_url));
 	$page_info1 .= "<ul>";
 	do {
 		$page_info1 .= "<li>";
@@ -149,16 +149,16 @@ if ($contact_count > 0) {
 
 
 // Registration Window
-$header1_2 .= "<a name='reg_window'></a><h2>Registration Window</h2>";
-$page_info2 .= sprintf("<p>You will be able to register your personal information beginning %s through %s.</p>", $reg_open, $reg_closed);
+$header1_2 .= "<a name='reg_window'></a><h2>Período de Registro de Participantes</h2>";
+$page_info2 .= sprintf("<p>Você vai poder se registrar e informar seus dados pessoais entre %s e %s.</p>", $reg_open, $reg_closed);
 
 // Entry Window
-$header1_3 .= "<a name='entry_window'></a><h2>Entry Window</h2>";
-$page_info3 .= sprintf("<p>You will be able to add your entries to the system beginning %s through %s. Entries will be accepted at our shipping and drop-off locations during this window as well.</p>",$entry_open, $entry_closed);
+$header1_3 .= "<a name='entry_window'></a><h2>Período de Registro de Amostras</h2>";
+$page_info3 .= sprintf("<p>Você vai poder cadastrar suas amostras entre %s e %s.</p>",$entry_open, $entry_closed);
 
 // Entry Fees
-$header1_4 .= "<a name='entry'></a><h2>Entry Fees</h2>";
-$page_info4 .= sprintf("<p>%s%s (%s) per entry. ",$currency_symbol,number_format($_SESSION['contestEntryFee'],2),$currency_code);
+$header1_4 .= "<a name='entry'></a><h2>Taxa de inscrição</h2>";
+$page_info4 .= sprintf("<p>%s%s (%s) por amostra. ",$currency_symbol,number_format($_SESSION['contestEntryFee'],2),$currency_code);
 if ($_SESSION['contestEntryFeeDiscount'] == "Y") $page_info4 .= sprintf("%s%s per entry after the %s entry. ",$currency_symbol,number_format($_SESSION['contestEntryFee2'],2),addOrdinalNumberSuffix($_SESSION['contestEntryFeeDiscountNum']));
 if ($_SESSION['contestEntryCap'] != "") $page_info4 .= sprintf("%s%s for unlimited entries. ",$currency_symbol,number_format($_SESSION['contestEntryCap'],2));
 if (NHC) $page_info4 .= sprintf("%s%s for AHA members.",$currency_symbol,number_format($_SESSION['contestEntryFeePasswordNum'],2));
@@ -166,8 +166,8 @@ $page_info4 .= "</p>";
 
 // Entry Limit
 if ($row_limits['prefsEntryLimit'] != "") {
-	$header1_5 .= "<a name='entry_limit'></a><h2>Entry Limit</h2>";
-	$page_info5 .= sprintf("<p>There is a limit of %s (%s) entries for this competition.</p>",readable_number($row_limits['prefsEntryLimit']),$row_limits['prefsEntryLimit']);
+	$header1_5 .= "<a name='entry_limit'></a><h2>Limite de Amostras</h2>";
+	$page_info5 .= sprintf("<p>Haverá o limite de %s (%s) amostras para essa competição.</p>",readable_number($row_limits['prefsEntryLimit']),$row_limits['prefsEntryLimit']);
 }
 
 if ((!empty($row_limits['prefsUserEntryLimit'])) || (!empty($row_limits['prefsUserSubCatLimit'])) || (!empty($row_limits['prefsUSCLExLimit']))) {
@@ -202,18 +202,18 @@ if ((!empty($row_limits['prefsUserEntryLimit'])) || (!empty($row_limits['prefsUs
 
 
 // Payment
-$header1_6 .= "<a name='payment'></a><h2>Payment</h2>";
-$page_info6 .= "<p>After registering your personal information and adding your entries to the system, you must pay your entry fee(s). Accepted payment methods are:</p>";
+$header1_6 .= "<a name='payment'></a><h2>Pagamento</h2>";
+$page_info6 .= "<p>Depois de realizar sue registro e de cadastrar suas amostrasm você deve efetuar o pagamento da taxa por cada amostra. Os métodos de pagamento aceitos são:</p>";
 $page_info6 .= "<ul>";
 if ($_SESSION['prefsCash'] == "Y") $page_info6 .= "<li>Cash</li>";
 if ($_SESSION['prefsCheck'] == "Y") $page_info6 .= sprintf("<li>Check, made out to <em>%s</em></li>",$_SESSION['prefsCheckPayee']);
-if ($_SESSION['prefsPaypal'] == "Y") $page_info6 .= "<li>Credit/debit card and e-check, via PayPal</li>";
+if ($_SESSION['prefsPaypal'] == "Y") $page_info6 .= "<li>PagSeguro</li>";
 //if ($_SESSION['prefsGoogle'] == "Y") $page_info6 .= "<li>Google Wallet</li>"; 
 $page_info6 .= "</ul>";
 
 // Judging Dates
-if ($totalRows_judging > 1) $header1_7 .= "<a name='judging'></a><h2>Judging Locations and Dates</h2>";
-else $header1_7 .= "<a name='judging'></a><h2>Judging Location and Dates</h2>";
+if ($totalRows_judging > 1) $header1_7 .= "<a name='judging'></a><h2>Local e Data dos Julgamentos</h2>";
+else $header1_7 .= "<a name='judging'></a><h2>Local e Data dos Julgamentos</h2>";
 
 	if ($totalRows_judging == 0) $page_info7 .= "<p>The competition judging date is yet to be determined. Please check back later.";
 	else {
@@ -235,7 +235,7 @@ else $header1_7 .= "<a name='judging'></a><h2>Judging Location and Dates</h2>";
 $header1_8 .= "";
 $page_info8 .= "";
 
-$header1_8 .= "<a name='categories'></a><h2>Categories Accepted: ".str_replace("2"," 2",$row_styles['brewStyleVersion'])."</h2>";
+$header1_8 .= "<a name='categories'></a><h2>Categorias Aceitas: ".str_replace("2"," 2",$row_styles['brewStyleVersion'])."</h2>";
 $page_info8 .= "<table class='dataTableCompact' style='border-collapse:collapse;'>";
 $page_info8 .= "<tr>"; 
 
@@ -269,30 +269,30 @@ $page_info8 .= "</table>";
 
 // Bottle Acceptance
 if ($row_contest_info['contestBottles'] != "") {
-	$header1_9 .= "<a name='bottle'></a><h2>Bottle Acceptance Rules</h2>";
+	$header1_9 .= "<a name='bottle'></a><h2>Regras de Aceitação de Garrafas</h2>";
 	$page_info9 .= $row_contest_info['contestBottles'];
 }
 
 // Shipping Locations
 if ($_SESSION['contestShippingAddress'] != "") {
-	$header1_10 .= "<a name='shipping'></a><h2>Shipping Location and Address</h2>";
+	$header1_10 .= "<a name='shipping'></a><h2>Locais para Envio de Garrafas</h2>";
 	$page_info10 .= "<p>";
 	$page_info10 .= $_SESSION['contestShippingName'];
 	$page_info10 .= "<br>";
 	$page_info10 .= $_SESSION['contestShippingAddress'];
 	$page_info10 .= "</p>";
-    $page_info10 .= "<h3>Packing and Shipping</h3>";
-    $page_info10 .= "<p><strong>Carefully pack your entries in a sturdy box. Line the inside of your carton with a plastic trash bag. Partition and pack each bottle with adequate packaging material. Please do not over pack!</strong>";
-	$page_info10 .= "<p>Write clearly: &quot;Fragile. This Side Up.&quot; on the package. Please refrain from using &quot;messy&quot; packaging materials such a Styrofoam &quot;peanuts&quot; or pellets; please use packaging material such as bubble wrap.</p>";
-    $page_info10 .= "<p>Enclose <em>each</em> of your bottle labels in a small zip-top bag before attaching to their respective bottles. This way it makes it possible for the organizer to identify specifically which entry has broken if there is damage during shipment.</p>";
-    $page_info10 .= "<p>Every reasonable effort will be made to contact entrants whose bottles have broken to make arrangements for sending replacement bottles.</p>";
-    $page_info10 .= "<p>If you live in the United States, please note that it is <strong>illegal</strong> to ship your entries via the United States Postal Service (USPS). Private shipping companies have the right to refuse your shipment if they are informed that the package contains glass and/or alcoholic beverages. Be aware that entries mailed internationally are often required by customs to have proper documentation. These entries might be opened and/or returned to the shipper by customs' officials at their discretion. It is solely the entrant's responsibility to follow all applicable laws and regulations.</p>";
+    $page_info10 .= "<h3>Empacotamento e envio</h3>";
+    $page_info10 .= "<p><strong>Embale cuidadosamente suas garrafas em uma caixa resistente. Forre o interior da caixa com um saco plástico. Embale cada carrafa com sua proteção individual!</strong>";
+	$page_info10 .= "<p>Escreva claramente \"Frágil! Este lado para cima\". na embalagem. Utilize plástico bolha para embalar cada garrafa. Evitar utilizar isopor ou papel.</p>";
+    $page_info10 .= "<p>Coloque <em>cada</em> etiqueta das garrafas em um saco plástico (ou utilize fita transparente para plastificar) antes de fixar a mesma com o elástico. Assim em caso de algum dano com as garrafas vamos conseguir identificar as amostras..</p>";
+    $page_info10 .= "<p>Caso alguma garrafa chegue danificada, a organização entrará em contato para solicitar garrafas extras se necessário.</p>";
+
 }
 
 // Drop Off
 if ($totalRows_dropoff > 0) {
-	if ($totalRows_dropoff == 1) $header1_11 .= "<a name='drop'></a><h2>Drop Off Location</h2>";
-	else $header1_11 .= "<a name='drop'></a><h2>Drop Off Locations</h2>";
+	if ($totalRows_dropoff == 1) $header1_11 .= "<a name='drop'></a><h2>Locais para Entrega de Garrafas</h2>";
+	else $header1_11 .= "<a name='drop'></a><h2>Locais para Entrega de Garrafas</h2>";
 	do {
 		$page_info11 .= "<p>";
 		if ($row_dropoff['dropLocationWebsite'] != "") $page_info11 .= sprintf("<a href='%s' target='_blank'><strong>%s</strong></a>",$row_dropoff['dropLocationWebsite'],$row_dropoff['dropLocationName']);
@@ -319,12 +319,12 @@ if ($row_contest_info['contestBOSAward'] != "") {
 
 // Awards and Awards Ceremony Location
 if ($row_contest_info['contestAwards'] != "") {
-	$header1_13 .= "<a name='awards'></a><h2>Awards</h2>";
+	$header1_13 .= "<a name='awards'></a><h2>Premiações</h2>";
 	$page_info13 .= $row_contest_info['contestAwards'];;
 }
 
 if ($_SESSION['contestAwardsLocName'] != "") {
-	$header1_14 .= "<a name='ceremony'></a><h2>Award Ceremony</h2>";
+	$header1_14 .= "<a name='ceremony'></a><h2>Cerimônia de Premiação</h2>";
 	$page_info14 .= "<p>";
 	$page_info14 .= sprintf("<strong>%s</strong>",$_SESSION['contestAwardsLocName']);
 	if ($_SESSION['contestAwardsLocation'] != "") $page_info14 .= sprintf("<br />%s",$_SESSION['contestAwardsLocation']);

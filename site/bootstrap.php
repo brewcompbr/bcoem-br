@@ -12,7 +12,7 @@
 reCaptcha Global Key for BCOE&M
 
 Public Key: 	6LdquuQSAAAAAC3rsksvtjRmR9yPFmflBF4OWNS7
-Private Key:	6LdquuQSAAAAAHkf3dDRqZckRb_RIjrkofxE8Knd 
+Private Key:	6LdquuQSAAAAAHkf3dDRqZckRb_RIjrkofxE8Knd  
 
 */
 
@@ -74,6 +74,7 @@ if ($setup_success) {
 	// Set timezone globals
 	$timezone_prefs = get_timezone($_SESSION['prefsTimeZone']);
 	date_default_timezone_set($timezone_prefs);
+	setlocale(LC_ALL, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
 	$tz = date_default_timezone_get();
 	
 	// Check for Daylight Savings Time (DST) - if true, add one hour to the offset

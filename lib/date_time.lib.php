@@ -44,7 +44,6 @@ function get_timezone($offset) {
 	$timezone = $timezones[$offset];
 	return $timezone;
 }
-
 function convert_timestamp($time_string,$timezone,$offset,$method) {
 	
 	$timezone = get_timezone($timezone);
@@ -76,17 +75,22 @@ function convert_timestamp($time_string,$timezone,$offset,$method) {
 		}
 		
 }
-
 function getTimeZoneDateTime($timezone_offset, $timestamp, $date_format, $time_format, $display_format, $return_format) { 
     
 	$tz = get_timezone($timezone_offset); // convert offset number to PHP timezone
     date_default_timezone_set($tz);
-	
+    setlocale(LC_ALL, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
+    
 	switch($display_format) {
 		case "long": // Long Format
-			if ($date_format == "1") $date = date('l, F j, Y', $timestamp);
-			else $date = date('l j F, Y', $timestamp);
-		break;
+// 			if ($date_format == "1"){ 
+// 		 		$date = date('l, F j, Y', $timestamp);
+// 			} else { 
+// 				$date = date('l j F, Y', $timestamp);
+// 			}
+			$date = utf8_encode(ucwords(strftime('%A', $timestamp)).', '.strftime('%d', $timestamp).' de '.ucwords(strftime('%B', $timestamp)).' de '.strftime('%Y', $timestamp));
+				
+					break;
 		
 		case "short": // Short Format
 			if ($date_format == "1") $date = date('m/d/Y', $timestamp);
@@ -99,7 +103,8 @@ function getTimeZoneDateTime($timezone_offset, $timestamp, $date_format, $time_f
 		break;
 		
 		case "xml": // XML Report Format
-			$date = date('l j F Y', $timestamp);
+			//$date = date('l, F j, Y', $timestamp);
+			$date = strftime("%A, %d de %B de %Y", strtotime($timestamp ));
 		break;
 	}
 	
@@ -108,10 +113,10 @@ function getTimeZoneDateTime($timezone_offset, $timestamp, $date_format, $time_f
 	
 	switch($return_format) {
 		case "date-time":
-			$return = $date." at ".$time.", ".date('T',$timestamp);
+			$return = $date." as ".$time." Horas";//.date('T',$timestamp);
 		break;
 		case "date-time-no-gmt":
-			$return = $date." at ".$time;
+			$return = $date." as ".$time. "Horas";
 		break;
 		case "date-no-gmt":
 			$return = $date;
@@ -126,7 +131,6 @@ function getTimeZoneDateTime($timezone_offset, $timestamp, $date_format, $time_f
 	}
 	return $return;
 }
-
 function greaterDate($start_date,$end_date) {
   $start = strtotime($start_date);
   $end = strtotime($end_date);
@@ -135,7 +139,6 @@ function greaterDate($start_date,$end_date) {
   else
    return FALSE;
 }
-
 function judging_date_return() {
 	require(CONFIG.'config.php');
 	mysql_select_db($database, $brewing);
@@ -151,5 +154,5 @@ function judging_date_return() {
 	$r = array_sum($newDate);
 	return $r;
 }
-
 ?>
+

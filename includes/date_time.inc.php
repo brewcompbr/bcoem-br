@@ -81,12 +81,19 @@ function getTimeZoneDateTime($timezone_offset, $timestamp, $date_format, $time_f
     
 	$tz = get_timezone($timezone_offset); // convert offset number to PHP timezone
     date_default_timezone_set($tz);
+    
+    setlocale(LC_ALL, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
+    //date_default_timezone_set('America/Sao_Paulo');
 	
 	switch($display_format) {
 		case "long": // Long Format
-			if ($date_format == "1") $date = date('l, F j, Y', $timestamp);
-			else $date = date('l j F, Y', $timestamp);
-		break;
+// 			if ($date_format == "1"){ 
+// 				$date = date('l, F j, Y', $timestamp);
+// 			} else { 
+// 				$date = date('l j F, Y', $timestamp);
+// 			}
+			$date = utf8_encode(ucwords(strftime('%A', $timestamp)).', '.strftime('%d', $timestamp).' de '.ucwords(strftime('%B', $timestamp)).' de '.strftime('%Y', $timestamp));
+			break;
 		
 		case "short": // Short Format
 			if ($date_format == "1") $date = date('m/d/Y', $timestamp);
@@ -99,7 +106,8 @@ function getTimeZoneDateTime($timezone_offset, $timestamp, $date_format, $time_f
 		break;
 		
 		case "xml": // XML Report Format
-			$date = date('l j F Y', $timestamp);
+			//$date = date('l j F Y', $timestamp);
+			$date = strftime("%A, %d de %B de %Y", strtotime($timestamp ));
 		break;
 	}
 	
@@ -124,7 +132,7 @@ function getTimeZoneDateTime($timezone_offset, $timestamp, $date_format, $time_f
 		break;
 		default: $return = $date;
 	}
-	return $return;
+	return ucwords($return);
 }
 
 function greaterDate($start_date,$end_date)

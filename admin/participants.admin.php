@@ -580,53 +580,58 @@ if (($action == "add") || (($action == "edit") && (($_SESSION['loginUsername'] =
       <td class="data">&nbsp;</td>
 </tr>
 <tr>
-      <td class="dataLabel" width="5%">First Name:</td>
+      <td class="dataLabel" width="5%">Nome:</td>
       <td class="data" width="20%"><input type="text" id="brewerFirstName" name="brewerFirstName" value="<?php if ($action == "edit") echo $row_brewer['brewerFirstName']; ?>" size="32" maxlength="20"></td>
       <td class="data"><span class="required">Required</span></td>
 </tr>
 <tr>
-      <td class="dataLabel">Last Name:</td>
+      <td class="dataLabel">Sobrenome:</td>
       <td class="data"><input type="text" name="brewerLastName" value="<?php if ($action == "edit") echo $row_brewer['brewerLastName']; ?>" size="32"></td>
       <td class="data"><span class="required">Required</span></td>
 </tr>
 <tr>
-      <td class="dataLabel">Street Address:</td>
+      <td class="dataLabel">CPF:</td>
+      <td class="data"><input type="text" name="brewerLastName" value="<?php if ($action == "edit") echo $row_brewer['brewerCPF']; ?>" size="32"></td>
+      <td class="data"><span class="required">Required</span></td>
+</tr>
+<tr>
+      <td class="dataLabel">Endereço:</td>
       <td class="data"><input type="text" name="brewerAddress" value="<?php if ($action == "edit") echo $row_brewer['brewerAddress']; ?>" size="32"></td>
       <td class="data"><span class="required">Required</span></td>
 </tr>
 <tr>
-      <td class="dataLabel">City:</td>
+      <td class="dataLabel">Cidade:</td>
       <td class="data"><input type="text" name="brewerCity" value="<?php if ($action == "edit") echo $row_brewer['brewerCity']; ?>" size="32"></td>
       <td class="data"><span class="required">Required</span></td>
 </tr>
 <tr>
-      <td class="dataLabel">State/Country:</td>
+      <td class="dataLabel">Estado:</td>
       <td class="data"><input type="text" name="brewerState" value="<?php if ($action == "edit") echo $row_brewer['brewerState']; ?>" size="32"></td>
       <td class="data"><span class="required">Required</span></td>
 </tr>
 <tr>
-      <td class="dataLabel">Zip/Postal Code:</td>
+      <td class="dataLabel">CEP:</td>
       <td class="data"><input type="text" name="brewerZip" value="<?php if ($action == "edit") echo $row_brewer['brewerZip']; ?>" size="32"></td>
       <td class="data"><span class="required">Required</span></td>
 </tr>
 <tr>
-      <td class="dataLabel">Phone 1:</td>
+      <td class="dataLabel">Telefone 1:</td>
       <td class="data"><input type="text" name="brewerPhone1" value="<?php if ($action == "edit") echo $row_brewer['brewerPhone1']; ?>" size="32"></td>
       <td class="data"><span class="required">Required</span></td>
 </tr>
 <tr>
-      <td class="dataLabel">Phone 2:</td>
+      <td class="dataLabel">Telefone 1: 2:</td>
       <td class="data"><input type="text" name="brewerPhone2" value="<?php if ($action == "edit") echo $row_brewer['brewerPhone2']; ?>" size="32"></td>
       <td class="data">&nbsp;</td>
 </tr>
 <tr>
-      <td class="dataLabel">Club Name (if appropriate):</td>
+      <td class="dataLabel">Clube Cervejeiro (se apropriado):</td>
       <td class="data"><input type="text" name="brewerClubs" value="<?php if ($action == "edit") echo $row_brewer['brewerClubs']; ?>" size="32" maxlength="200"></td>
       <td class="data">&nbsp;</td>
 </tr>
 <tr>
 	  <td>&nbsp;</td>
-      <td colspan="2" class="data"><input name="submit" type="submit" class="button" value="Submit Brewer Information" /></td>
+      <td colspan="2" class="data"><input name="submit" type="submit" class="button" value="Gravar dados" /></td>
     </tr>
 </table>
 <input name="brewerEmail" type="hidden" value="<?php echo $username; ?>" />

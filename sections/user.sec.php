@@ -30,7 +30,7 @@ $("#status").html('<span class="icon"><img src="<?php echo $base_url; ?>images/l
 	{ 
         $("#user_name").removeClass('object_error'); // if necessary
 		$("#user_name").addClass("object_ok");
-		$(this).html('<span style="color:green;">Email address not in use.</span>');
+		$(this).html('<span style="color:green;">O email informado ainda não foi utilizado.</span>');
 	}  
 	else  
 	{  
@@ -46,7 +46,7 @@ $("#status").html('<span class="icon"><img src="<?php echo $base_url; ?>images/l
 }
 else
 	{
-	$("#status").html('<font color="red">The username should have at least <strong>6</strong> characters.</font>');
+	$("#status").html('<font color="red">O nome do usuário (Email) deve ter pelo menos <strong>6</strong> caracteres.</font>');
 	$("#user_name").removeClass('object_ok'); // if necessary
 	$("#user_name").addClass("object_error");
 	}
@@ -113,34 +113,34 @@ if (($action == "username") && ($filter == "admin")) {
 <table>
 <?php if ($action == "username") { ?>
 	<tr>
-    	<td class="dataLabel">Current Email Address:</td>
+    	<td class="dataLabel">Email Atual:</td>
     	<td class="data"><?php if ($filter == "admin") echo $row_brewer['brewerEmail']; else echo $_SESSION['user_name']; ?></td>
         <td class="data">&nbsp;</td>
   	</tr>
 	<tr>
-    	<td class="dataLabel">New Email Address:</td>
-    	<td class="data"><input name="user_name" id="user_name"  type="text" class="submit" size="40"  onkeyup="twitter.updateUrl(this.value)" onchange="AjaxFunction(this.value);" ><div id="msg_email">Email Format:</div><div id="status"></div></td>
+    	<td class="dataLabel">Novo Email:</td>
+    	<td class="data"><input name="user_name" id="user_name"  type="text" class="submit" size="40"  onkeyup="twitter.updateUrl(this.value)" onchange="AjaxFunction(this.value);" ><div id="msg_email">Formato do email:</div><div id="status"></div></td>
         <td class="data"><div id="inf_email">&nbsp;</div></td>
   	</tr>
     <tr>
-    	<td class="dataLabel">Are You Sure?</td>
-    	<td class="data"><input type="checkbox" id="sure" name="sure" value="Y" />Yes</td>
+    	<td class="dataLabel">Você tem certeza?</td>
+    	<td class="data"><input type="checkbox" id="sure" name="sure" value="Y" />Sim</td>
         <td class="data">&nbsp;</td>
   	</tr>
 <?php } 
 if ($action == "password") {
 ?>
   	<tr>
-    	<td class="dataLabel">Current Password:</td>
+    	<td class="dataLabel">Senha atual:</td>
     	<td class="data"><input name="passwordOld" type="password" size="25"></td>
   	</tr>
     <tr>
-    	<td class="dataLabel">New Password:</td>
+    	<td class="dataLabel">Nova Senha:</td>
     	<td class="data"><input name="password" type="password" size="25"></td>
   	</tr>
 <?php } ?>
 </table>
-<p><input type="submit" class="button" value="Update"></p>
+<p><input type="submit" class="button" value="Atualizar"></p>
 <input name="user_name_old" type="hidden" value="<?php if ($filter == "admin") echo $row_brewer['brewerEmail']; else echo $_SESSION['user_name']; ?>">
 <input type="hidden" name="relocate" value="<?php echo relocate($_SERVER['HTTP_REFERER'],"default",$msg,$id); ?>">
 </form>

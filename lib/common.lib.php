@@ -619,7 +619,7 @@ function currency_info($input,$method) {
 	Chile, Pesos (CLP)
 	China, Yuan Renminbi (CNY)
 	Colombia, Pesos (COP)
-	Costa Rica, Col�n (CRC)
+	Costa Rica, Col�n (CRC)
 	Croatia, Kuna (HRK)
 	Cuba, Pesos (CUP)
 	Cyprus, Euro (EUR)
@@ -2617,9 +2617,10 @@ function readable_number($a){
 // http://www.iamcal.com/publish/articles/php/readable_numbers/
 
 	$bits_a = array("thousand", "million", "billion", "trillion", "quadrillion");
-	$bits_b = array("ten", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety");
-	$bits_c = array("one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen");
-
+	$bits_b = array("dez", "vinte", "trinta", "quarenta", "cinquenta", "sessenta", "setenta", "oitenta", "noventa");
+	$bits_c = array("uma", "duas", "três", "quatro", "cinco", "seis", "sete", "oito", "nove", "dez", "onze", "doze", "treze", "quatorze", "quinze", "dezesseis", "dezessete", "dezoito", "dezenove");
+	$bits_d = array("cem", "duzentas", "trezentas", "quatrocentas", "quinhentas", "seiscentas", "setecentas", "oitocentas", "novecentas");
+	
 	if ($a==0){return 'zero';}
 
 	$out = ($a<0)?'minus ':'';
@@ -2637,7 +2638,7 @@ function readable_number($a){
 	if ($a > 100){
 		$b = floor($a/100);
 		$a -= 100 * $b;
-		$out .= readable_number($b).' hundred'.(($a)?' and ':' ');
+		$out .= $bits_d[$b-1].(($a)?' e ':' ');
 	}
 	if ($a >= 20){
 		$b = floor($a/10);
@@ -2796,7 +2797,7 @@ function dropoff_location($input) {
 	$dropoff = mysql_query($query_dropoff, $brewing) or die(mysql_error());
 	$row_dropoff = mysql_fetch_assoc($dropoff);
 	if ($input > 0)	return $row_dropoff['dropLocationName'];
-	else return "Shipping Entries";
+	else return "Envio por Transportadora";
 }
 
 
@@ -3125,17 +3126,17 @@ function judging_location_info($id) {
 function yes_no($input,$base_url,$method=0) {
 	if ($method != 3) {
 		if (($input == "Y") || ($input == 1)) { 
-			$output = "<span class='icon'><img src='".$base_url."images/tick.png' alt='Yes' title='Yes'></span>";
-			if ($method == 0) $output .= "Yes";
+			$output = "<span class='icon'><img src='".$base_url."images/tick.png' alt='Sim' title='Sim'></span>";
+			if ($method == 0) $output .= "Sim";
 		}
 		else {
-			$output = "<span class='icon'><img src='".$base_url."images/cross.png' alt='No' title='No'></span>";
-			if ($method == 0) $output .= "No";
+			$output = "<span class='icon'><img src='".$base_url."images/cross.png' alt='Não' title='Não'></span>";
+			if ($method == 0) $output .= "Não";
 		}
 	}
 	if ($method == 3) {
-		if (($input == "Y") || ($input == 1)) $output = "Yes";
-		else $output = "No";
+		if (($input == "Y") || ($input == 1)) $output = "Sim";
+		else $output = "Não";
 		
 	}
 	return $output;

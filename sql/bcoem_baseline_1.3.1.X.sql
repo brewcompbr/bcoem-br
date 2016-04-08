@@ -1,3 +1,18 @@
+
+ALTER TABLE `acervars2015_brewer` ADD `brewerCPF` VARCHAR( 50 ) AFTER `brewerLastName` ;
+ALTER TABLE `acervars2015_brewing` ADD `brewPayTransId` INT NULL ;
+
+CREATE TABLE IF NOT EXISTS `acervars2015_payment` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `idUser` int(11) NOT NULL,
+  `idBrewing` int(11) DEFAULT NULL,
+  `datePayment` date DEFAULT NULL,
+  `statusPayment` varchar(100) DEFAULT NULL,
+  `keyPayment` varchar(100) DEFAULT NULL,
+  `idTransaction` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
+
 -- -------------------------------------------------------------------------
 --
 -- This baseline sql document is *ONLY* for new installations.

@@ -36,6 +36,7 @@ if (NHC) {
 		
 		
 		$aha = $_POST['brewerAHA']; 
+		$cpf = $_POST['brewerCPF'];
 		if ($aha != "") {
 			$query_aha_exists = "SELECT COUNT(*) AS count FROM nhcentrant WHERE AHANumber = '$aha'";
 			$aha_exists = mysql_query($query_aha_exists, $brewing) or die(mysql_error());
@@ -85,8 +86,8 @@ if (NHC) {
 	// CAPCHA check
 	if ($filter != "admin") {
 	require_once(INCLUDES.'recaptchalib.inc.php');
-	$privatekey = "6LdquuQSAAAAAHkf3dDRqZckRb_RIjrkofxE8Knd";
-	$resp = recaptcha_check_answer ($privatekey, $_SERVER["REMOTE_ADDR"], $_POST["recaptcha_challenge_field"], $_POST["recaptcha_response_field"]);
+	$privatekey = "6Lch9wwTAAAAAFG2VIxjawP38MnAMjOXDbka_WPA";
+	$resp = recaptcha_check_answer ($privatekey, $_SERVER["REMOTE_ADDR"], $_POST["recaptcha_challenge_field"], $_POST["g-recaptcha-response"]);
 	}
 	
 	if (($filter != "admin") && (!$resp->is_valid)) {
@@ -97,6 +98,8 @@ if (NHC) {
 	setcookie("userQuestionAnswer", $_POST['userQuestionAnswer'], 0, "/");
 	setcookie("brewerFirstName", $_POST['brewerFirstName'], 0, "/");
 	setcookie("brewerLastName", $_POST['brewerLastName'], 0, "/");
+	setcookie("brewerCPF", $_POST['brewerCPF'], 0, "/");
+	setcookie("brewerDropOff", $_POST['brewerDropOff'], 0, "/");
 	setcookie("brewerAddress", $_POST['brewerAddress'], 0, "/");
 	setcookie("brewerCity", $_POST['brewerCity'], 0, "/");
 	setcookie("brewerState", $_POST['brewerState'], 0, "/");
@@ -120,6 +123,8 @@ if (NHC) {
 	setcookie("userQuestionAnswer", $_POST['userQuestionAnswer'], 0, "/");
 	setcookie("brewerFirstName", $_POST['brewerFirstName'], 0, "/");
 	setcookie("brewerLastName", $_POST['brewerLastName'], 0, "/");
+	setcookie("brewerCPF", $_POST['brewerCPF'], 0, "/");
+	setcookie("brewerDropOff", $_POST['brewerDropOff'], 0, "/");
 	setcookie("brewerAddress", $_POST['brewerAddress'], 0, "/");
 	setcookie("brewerCity", $_POST['brewerCity'], 0, "/");
 	setcookie("brewerState", $_POST['brewerState'], 0, "/");
@@ -157,7 +162,9 @@ if ((strstr($username,'@')) && (strstr($username,'.'))) {
 		setcookie("userQuestionAnswer", $_POST['userQuestionAnswer'], 0, "/");
 		setcookie("brewerFirstName", $_POST['brewerFirstName'], 0, "/");
 		setcookie("brewerLastName", $_POST['brewerLastName'], 0, "/");
+		setcookie("brewerCPF", $_POST['brewerCPF'], 0, "/");
 		setcookie("brewerAddress", $_POST['brewerAddress'], 0, "/");
+		setcookie("brewerDropOff", $_POST['brewerDropOff'], 0, "/");
 		setcookie("brewerCity", $_POST['brewerCity'], 0, "/");
 		setcookie("brewerState", $_POST['brewerState'], 0, "/");
 		setcookie("brewerZip", $_POST['brewerZip'], 0, "/");
@@ -207,7 +214,8 @@ if ((strstr($username,'@')) && (strstr($username,'.'))) {
         elseif (($_POST['brewerJudgeLocation'] != "") && (!is_array($_POST['brewerStewardLocation']))) $location_pref2 = $_POST['brewerStewardLocation'];
 	}
     else $location_pref2 = "";
-	
+    
+
 		// Add the user's info to the "brewer" table
 	  	// Numbers 999999994 through 999999999 are reserved for NHC applications.
 		if (($_POST['brewerAHA'] < "999999994") || ($_POST['brewerAHA'] == "")) {
@@ -216,10 +224,12 @@ if ((strstr($username,'@')) && (strstr($username,'.'))) {
 			  uid,
 			  brewerFirstName, 
 			  brewerLastName, 
+			  brewerCPF,		
 			  brewerAddress, 
 			  brewerCity, 
 			  brewerState, 
-			  
+			  brewerDropOff,
+					
 			  brewerZip,
 			  brewerCountry,
 			  brewerPhone1, 
@@ -235,13 +245,15 @@ if ((strstr($username,'@')) && (strstr($username,'.'))) {
 			  brewerJudgeLocation,
 			  brewerStewardLocation,
 			  brewerAHA
-			) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
+			) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
 						   GetSQLValueString($row_user['id'], "int"),
-						   GetSQLValueString(capitalize($_POST['brewerFirstName']), "text"),
-						   GetSQLValueString(capitalize($_POST['brewerLastName']), "text"),
-						   GetSQLValueString(capitalize($_POST['brewerAddress']), "text"),
-						   GetSQLValueString(capitalize($_POST['brewerCity']), "text"),
+						   GetSQLValueString($_POST['brewerFirstName'], "text"),
+						   GetSQLValueString($_POST['brewerLastName'], "text"),
+						   GetSQLValueString($_POST['brewerCpf'], "text"),
+						   GetSQLValueString($_POST['brewerAddress'], "text"),
+						   GetSQLValueString($_POST['brewerCity'], "text"),
 						   GetSQLValueString($_POST['brewerState'], "text"),
+						   GetSQLValueString($_POST['brewerDropOff'], "text"),
 						   GetSQLValueString($_POST['brewerZip'], "text"),
 						   GetSQLValueString($_POST['brewerCountry'], "text"),
 						   GetSQLValueString($_POST['brewerPhone1'], "text"),
@@ -264,9 +276,11 @@ if ((strstr($username,'@')) && (strstr($username,'.'))) {
 			  uid,
 			  brewerFirstName, 
 			  brewerLastName, 
+			  brewerCPF,
 			  brewerAddress, 
 			  brewerCity, 
 			  brewerState, 
+			  brewerDropOff,
 			  
 			  brewerZip,
 			  brewerCountry,
@@ -282,13 +296,15 @@ if ((strstr($username,'@')) && (strstr($username,'.'))) {
 			  brewerJudgeRank,
 			  brewerJudgeLocation,
 			  brewerStewardLocation
-			) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
+			) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
 						   GetSQLValueString($row_user['id'], "int"),
-						   GetSQLValueString(capitalize($_POST['brewerFirstName']), "text"),
-						   GetSQLValueString(capitalize($_POST['brewerLastName']), "text"),
-						   GetSQLValueString(capitalize($_POST['brewerAddress']), "text"),
-						   GetSQLValueString(capitalize($_POST['brewerCity']), "text"),
+						   GetSQLValueString($_POST['brewerFirstName'], "text"),
+						   GetSQLValueString($_POST['brewerLastName'], "text"),
+						   GetSQLValueString($_POST['brewerCpf'], "text"),
+						   GetSQLValueString($_POST['brewerAddress'], "text"),
+						   GetSQLValueString($_POST['brewerCity'], "text"),
 						   GetSQLValueString($_POST['brewerState'], "text"),
+						   GetSQLValueString($_POST['brewerDropOff'], "text"),
 						   GetSQLValueString($_POST['brewerZip'], "text"),
 						   GetSQLValueString($_POST['brewerCountry'], "text"),
 						   GetSQLValueString($_POST['brewerPhone1'], "text"),

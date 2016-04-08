@@ -38,7 +38,8 @@ Declare all variables empty at the top of the script. Add on later...
 	
 	etc., etc., etc.
  * ---------------- END Rebuild Info --------------------- */
- 
+
+
 if (NHC) {
 	
 		if ($totalRows_log_paid >= $row_limits['prefsEntryLimit']) echo "<div class='error'>The limit of paid entries has been reached. The payment system is no longer active.</div>";
@@ -202,28 +203,28 @@ else {
 	
 	// Build top of page info: total entry fees, list of unpaid entries, etc.
 	$primary_page_info .= "<p>";
-	$primary_page_info .= sprintf("<span class='icon'><img src='".$base_url."images/money.png'  border='0' alt='Entry Fees' title='Entry Fees'></span>Fees are %s per entry.",$currency_symbol.number_format($_SESSION['contestEntryFee'],2));
+	$primary_page_info .= sprintf("<span class='icon'><img src='".$base_url."images/money.png'  border='0' alt='Entry Fees' title='Entry Fees'></span>A taxa de inscrição é de %s POR AMOSTRA.",$currency_symbol.number_format($_SESSION['contestEntryFee'],2));
 	if ($_SESSION['contestEntryFeeDiscount'] == "Y") $primary_page_info .= sprintf(" %s per entry after the %s entry. ",$currency_symbol.number_format($_SESSION['contestEntryFee2'], 2),addOrdinalNumberSuffix($_SESSION['contestEntryFeeDiscountNum'])); 
 	if ($_SESSION['contestEntryCap'] != "") $primary_page_info .= sprintf(" %s for unlimited entries. ",$currency_symbol.number_format($_SESSION['contestEntryCap'], 2));
 	$primary_page_info .= "</p>";
 	if ($row_brewer['brewerDiscount'] == "Y") {
 		$primary_page_info .= sprintf("<span class='icon'><img src='".$base_url."images/star.png'  border='0' alt='Entry Fees' title='Entry Fees'></span>Your fees have been discounted to %s per entry.</p>",$currency_symbol.number_format($_SESSION['contestEntryFeePasswordNum'], 2));
 	}
-	$primary_page_info .= sprintf("<p><span class='icon'><img src='".$base_url."images/money.png'  border='0' alt='Entry Fees' title='Entry Fees'></span>Your total entry fees are %s. You need to pay %s.</p>",$currency_symbol.number_format($total_entry_fees,2),$currency_symbol.number_format($total_to_pay,2));
+	$primary_page_info .= sprintf("<p><span class='icon'><img src='".$base_url."images/money.png'  border='0' alt='Entry Fees' title='Entry Fees'></span>Seu valor total das inscrições é %s. Você ainda deve pagar %s.</p>",$currency_symbol.number_format($total_entry_fees,2),$currency_symbol.number_format($total_to_pay,2));
 	
-	if ($total_not_paid == 0) $primary_page_info .= sprintf("<p><span class='icon'><img src='".$base_url."images/thumb_up.png'  border='0' alt='Entry Fees' title='Entry Fees'></span>%s</p>","Your fees have been paid. Thank you!");
+	if ($total_not_paid == 0) $primary_page_info .= sprintf("<p><span class='icon'><img src='".$base_url."images/thumb_up.png'  border='0' alt='Entry Fees' title='Entry Fees'></span>%s</p>","Todas as amostras já foram pagas. Obrigado!");
 	
 	
 	else {
 		$primary_page_info .= "<p>";
-		$primary_page_info .= sprintf("<span class='icon'><img src='".$base_url."images/money.png'  border='0' alt='Entry Fees' title='Entry Fees'></span>You currently have %s <strong>unpaid</strong> ",readable_number($total_not_paid));
-		if ($total_not_paid == "1") $primary_page_info .= "entry:"; else $primary_page_info .= "entries:";
+		$primary_page_info .= sprintf("<span class='icon'><img src='".$base_url."images/money.png'  border='0' alt='Entry Fees' title='Entry Fees'></span>Você ainda tem %s  ",readable_number($total_not_paid));
+		if ($total_not_paid == "1") $primary_page_info .= "amostra <strong>não paga</strong>:"; else $primary_page_info .= "amostras <strong>não pagas</strong>:";
 		$primary_page_info .= "</p>";
 		$primary_page_info .= "<ul>";
 			do { 
 				if ($row_log['brewPaid'] != "1") {
 					$entry_no = sprintf("%04s",$row_log['id']);
-					$primary_page_info .= sprintf("<li>Entry #%s: %s (Category %s)</li>",$entry_no,$row_log['brewName'],$row_log['brewCategory'].$row_log['brewSubCategory']);
+					$primary_page_info .= sprintf("<li>Amostra #%s: %s (Categoria %s)</li>",$entry_no,$row_log['brewName'],$row_log['brewCategory'].$row_log['brewSubCategory']);
 					$entries .= sprintf("%04s",$row_log['id']).", ";
 					$return_entries .= $row_log['id']."-";
 				}
@@ -258,31 +259,22 @@ else {
 			$fee = number_format((($total_to_pay * .03) + .30), 2, '.', ''); 
 		
 			// Online
-			$header1_3 .= "<h2>Pay Online</h2>";
-			$page_info3 .= "<p><span class='required'> Your payment confirmation email is your entry receipt. Include a copy with your entries as proof of payment.</span></p>";
+			$header1_3 .= "<h2>Pague Online</h2>";
+			$page_info3 .= "<p><div id='mensagemModal' name='mensagemModal'></div></p>";
 		
-			// PayPal
-			$header2_4 .= "<h3>PayPal</h3>";
-			$page_info4 .= "<p>Click the &quot;Pay Now&quot; button below to pay online using PayPal.";
-			if ($_SESSION['prefsTransFee'] == "Y") $page_info4 .= sprintf(" Please note that a transaction fee of %s will be added into your total.</p>",$currency_symbol.$fee);
-			$page_info4 .= "<div class='error'>To make sure your PayPal payment is marked &quot;paid&quot; on <em>this site</em>, please click the &quot;Return to...&quot; link on PayPal's confirmation screen after you have sent your payment.</div>";
-			$page_info4 .= "<form name=\"PayPal\" action=\"https://www.paypal.com/cgi-bin/webscr\" method=\"post\" onsubmit=\"return confirm('To make sure your PayPal payment is marked PAID on THIS SITE, make sure to click the Return to... link on PayPal\'s confirmation screen AFTER you have sent your payment.');\">";
-			$page_info4 .= "<input type='hidden' name='cmd' value='_xclick'>";
-			$page_info4 .= sprintf("<input type='hidden' name='business' value='%s'>",$_SESSION['prefsPaypalAccount']);
-			$page_info4 .= sprintf("<input type='hidden' name='item_name' value='%s, %s - %s Payment'>",$_SESSION['brewerLastName'],$_SESSION['brewerFirstName'],$_SESSION['contestName']);
-			$page_info4 .= sprintf("<input type='hidden' name='amount' value='%s'>",$payment_amount);
-			$page_info4 .= sprintf("<input type='hidden' name='currency_code' value='%s'>",$currency_code);
-			$page_info4 .= "<input type='hidden' name='button_subtype' value='services'>";
-			$page_info4 .= "<input type='hidden' name='no_note' value='0'>";
-			$page_info4 .= "<input type='hidden' name='cn' value='Add special instructions'>";
-			$page_info4 .= "<input type='hidden' name='no_shipping' value='1'>";
-			$page_info4 .= "<input type='hidden' name='rm' value='1'>";
-			$page_info4 .= sprintf("<input type='hidden' name='return' value='%s'>",rtrim($return, '-'));
-			$page_info4 .= sprintf("<input type='hidden' name='cancel_return' value='%s'>",$base_url."index.php?section=pay&msg=11");
-			$page_info4 .= "<input type='hidden' name='bn' value='PP-BuyNowBF:btn_paynowCC_LG.gif:NonHosted'>";
-			$page_info4 .= "<input type='image' src='https://www.paypalobjects.com/en_US/i/btn/btn_paynowCC_LG.gif' border='0' name='submit' class='paypal' alt='Pay your competition entry fees with PayPal' title='Pay your compeition entry fees with PayPal'>";
+
+			// PagSeguro
+			$header2_4 .= "<h3>PagSeguro</h3>";
+			$page_info4 .= "<p>Clique no botão abaixo para realizar seu pagamento no PagSeguro.";
+			$page_info4 .= "<div class='error'>A inscrição de sua amostra só será considerada paga após a compensação do pagamento pelo PagSeguro.</div>";
+			
+		
+			$page_info4 .= "<script src=\"".$PAGSEGURO_CONFIG['JSLIBRARY'] ."\"></script>";
+			$page_info4 .= "<form action=\"https://sandbox.pagseguro.uol.com.br/checkout/v2/cart.html?action=add\" method=\"post\" onsubmit=\"prepararPagamento(); return false;\">";
+			$page_info4 .= "<input type=\"image\" src=\"images/120x53-pagar.gif\" name=\"submit\" alt=\"Pague com PagSeguro - é rápido, grátis e seguro!\" />";
+			$page_info4 .= "<input type=\"hidden\" name=\"itemCode\" value=\"62759F19A8A807E994ED1F8367071ADC\" />";
 			$page_info4 .= "</form>";
-	
+			
 			/*
 			if ($_SESSION['prefsGoogle'] == "Y") {
 				// Google Wallet
@@ -359,3 +351,62 @@ else {
 	
 } // end else if (NHC)
 ?>
+
+	<script>
+	
+	var o_table; 
+	
+	function prepararPagamento()
+	{
+
+		$("#mensagemModal").html('<span class="info">Preparando dados....Por favor aguarde.</span>');	
+		$.post("<?php echo $base_url; ?>ajax/getChaveCompra.php",{ }, function(xml) 
+		{													
+			$(xml).find('resposta').each
+			( 
+				function()
+				{ 
+					status 		= $(this).find('status').text();
+					mensagem 	= $(this).find('mensagem').text();
+					chaves		= $(this).find('chaves').text();
+					if(status=='1')
+					{
+						salvarDados(chaves, mensagem, 0, '');
+						PagSeguroLightbox( {code: mensagem}, { 
+																success : function(id_pagseguro) 
+																{ 
+																	salvarDados(chaves, mensagem, 2, id_pagseguro);
+																	$("#mensagemModal").html('<span class="info"> Compra foi realizada com sucesso. Aguarde até a transação for aprovada</span>');
+																	//window.location.replace("<?php echo $base_url; ?>index.php?section=pay&msg=14");
+																	
+																},
+																abort : function() 
+																{ 
+																	$("#btnTodas").attr("class", "btn btn-info");
+																	$("#btnTodas").html("&nbsp;Abortado&nbsp;");
+																	salvarDados(chaves, mensagem, 1, '');
+																	$("#mensagemModal").html('<span class="error"> Compra foi abortada....</span>');	 
+																	window.location.replace("<?php echo $base_url; ?>index.php?section=pay&msg=11");											
+																} 
+															});
+					}
+					else
+						$("#mensagemModal").html('<span class="error">Problemas conectando ao site do PagSeguro, tente novamente.</span>');	
+				}
+			);
+		});	
+	}
+	
+
+	function salvarDados(codPedido, mensagem, oop, oo1)
+	{	
+		$.post("<?php echo $base_url; ?>includes/process/process_payment.php",{"codP":codPedido, "keyP":mensagem, "oop":oop, "oo1":oo1 }, function(xml) 
+				{
+						return;
+				}
+			);		
+	}
+	
+	
+	</script>
+

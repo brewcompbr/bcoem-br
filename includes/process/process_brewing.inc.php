@@ -36,6 +36,22 @@ if ((isset($_SESSION['loginUsername'])) && (isset($_SESSION['userLevel']))) {
 		
 		}
 		
+		$separators = array(" ", "/", "-", ".");
+		$cpf = $_SESSION['brewerCpf'];
+		$cpf = str_replace($separators,"",$cpf);
+		$query_cpf_exists = "SELECT COUNT(*) AS count FROM nacional_special WHERE userDocument  = '$cpf'";
+		$cpf_exists = mysql_query($query_cpf_exists, $brewing) or die(mysql_error());
+		$row_cpf_exists = mysql_fetch_assoc($cpf_exists);
+		 
+		if ($row_cpf_exists['count']  == 0 && $section != "admin" && $go != "entrant") {
+			$location = $base_url."index.php?section=".$section."&go=".$go."&msg=10";
+			$pattern = array('\'', '"');
+			$insertGoTo = str_replace($pattern, "", $location); 
+			header(sprintf("Location: %s", stripslashes($insertGoTo)));
+			exit();
+		}
+		
+		
 		if (($action == "add") || ($action == "edit")) {
 			$brewName = strtr($_POST['brewName'],$html_remove);
 			$brewName = strtr($brewName,$html_string);
@@ -567,7 +583,7 @@ if ((isset($_SESSION['loginUsername'])) && (isset($_SESSION['userLevel']))) {
 					$updateSQL .= "brewBoilMins=".GetSQLValueString($_POST['brewBoilMins'],"text").", "; 
 				}
 				
-				$updateSQL .= "brewName=".GetSQLValueString(capitalize($brewName),"text").", ";
+				$updateSQL .= "brewName=".GetSQLValueString($brewName,"text").", ";
 				$updateSQL .= "brewStyle=".GetSQLValueString($row_style_name['brewStyle'],"text").", ";
 				$updateSQL .= "brewCategory=".GetSQLValueString($styleTrim,"text").", "; 
 				$updateSQL .= "brewCategorySort=".GetSQLValueString($styleFix,"text").", ";  
